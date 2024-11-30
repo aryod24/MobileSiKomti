@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sikomti_mobile/services/HistoryApiService.dart';
-import 'qrexport.dart';
+import 'history/qrexport.dart';
 
 class HasilScreenMahasiswa extends StatefulWidget {
   @override

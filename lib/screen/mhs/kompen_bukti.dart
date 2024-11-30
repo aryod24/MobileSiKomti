@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sikomti_mobile/screen/mhs/UploadBuktiScreen.dart';
+import 'package:sikomti_mobile/screen/mhs/progress/UploadBuktiScreen.dart';
 import 'package:sikomti_mobile/screen/mhs/progress/detailbukti.dart';
 import 'package:sikomti_mobile/services/ProgressApiService.dart';
 
