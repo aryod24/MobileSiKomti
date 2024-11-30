@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sikomti_mobile/services/KompenApiService.dart';
 import '../../services/request_kompen_services.dart';
-import 'checkprogress.dart';
-import 'pengajuanscreen.dart'; // Import the PengajuanScreen
+import 'progress/checkprogress.dart';
+import 'progress/pengajuanscreen.dart'; // Import the PengajuanScreen
 
 class RequestMhsScreen extends StatefulWidget {
   @override

@@ -3,7 +3,7 @@ import 'package:sikomti_mobile/services/data_service.dart';
 import 'alpha/edit_mahasiswaalpha.dart';
 import 'alpha/createalphascreen.dart';
 import '/models/mahasiswa_alpha.dart';
-import 'export_data_screen.dart';
+import 'alpha/export_data_screen.dart';
 
 class DataScreen extends StatefulWidget {
   @override
