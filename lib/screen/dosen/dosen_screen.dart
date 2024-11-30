@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sikomti_mobile/screen/dosen/hasilscreen.dart';
 import 'package:sikomti_mobile/screen/dosen/requestmhs.dart';
-import 'package:sikomti_mobile/services/auth_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'kompen/create_kompen_screen.dart';
 import 'kompen_screen.dart';
@@ -16,7 +15,6 @@ class DosenScreen extends StatefulWidget {
 }
 
 class _DosenScreenState extends State<DosenScreen> {
-  final AuthService _authService = AuthService();
   int _selectedIndex = 0;
 
   Future<Map<String, String>> getUserData() async {

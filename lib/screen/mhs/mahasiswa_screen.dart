@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sikomti_mobile/screen/mhs/hasilscreenmhs.dart';
 import 'package:sikomti_mobile/screen/mhs/progresskompen.dart';
-import 'package:sikomti_mobile/services/auth_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'list_kompenmhs.dart';
 import '../profil/profile_screen.dart';
@@ -14,7 +13,6 @@ class MahasiswaScreen extends StatefulWidget {
 }
 
 class _MahasiswaScreenState extends State<MahasiswaScreen> {
-  final AuthService _authService = AuthService();
   int _selectedIndex = 0;
 
   Future<Map<String, String>> getUserData() async {
