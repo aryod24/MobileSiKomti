@@ -205,6 +205,15 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
+                                          'Nama: ${progress['nama']}',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white70,
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
                                           'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}',
                                           style: const TextStyle(
                                             fontSize: 16,

@@ -161,6 +161,20 @@ class DetailBuktiScreen extends StatelessWidget {
                             const SizedBox(height: 5),
                             Row(
                               children: [
+                                const Icon(Icons.task, color: Colors.white),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Nama Progress: ${progress['nama_progres'] ?? 'Tidak ada nama'}',
+                                  style: const TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
                                 const Icon(Icons.access_time,
                                     color: Colors.white),
                                 const SizedBox(width: 5),

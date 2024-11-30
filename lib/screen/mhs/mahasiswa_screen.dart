@@ -131,20 +131,6 @@ class HomepageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 1),
-            Card(
-              margin: EdgeInsets.all(10),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Selamat datang di SiKomti',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
             ProfilMahasiswa(
               nama: userData['nama'] ?? 'Nama tidak ditemukan',
               ni: userData['ni'] ?? 'NI tidak ditemukan',
