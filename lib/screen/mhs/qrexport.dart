@@ -1,44 +1,108 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'pdf_generator.dart';
 
 class CertificateScreen extends StatelessWidget {
   final Map<String, dynamic> history;
 
   CertificateScreen({required this.history});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sertifikat Kompen'),
-      ),
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Sertifikat Penyelesaian Kompen',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      'Preview Qr Code',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(height: 20),
-            Text('Nama Kompen: ${history['kompen']['nama_kompen']}'),
-            Text('Deskripsi: ${history['kompen']['deskripsi']}'),
-            Text('Tanggal Mulai: ${history['kompen']['tanggal_mulai']}'),
-            Text('Tanggal Akhir: ${history['kompen']['tanggal_akhir']}'),
-            Text('Jam Kompen: ${history['jam_kompen']}'),
-            SizedBox(height: 20),
-            QrImageView(
-              data:
-                  'Anda telah menyelesaikan kompen oleh Dosen dengan UUID_Kompen: ${history['kompen']['UUID_Kompen']}',
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Cetak PDF'),
-              onPressed: () => _generatePdf(context),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 1),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Penyelesaian Kompensasi',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                                'Nama Kompen: ${history['kompen']['nama_kompen']}'),
+                            Text(
+                                'Deskripsi: ${history['kompen']['deskripsi']}'),
+                            Text(
+                                'Tanggal Mulai: ${history['kompen']['tanggal_mulai']}'),
+                            Text(
+                                'Tanggal Akhir: ${history['kompen']['tanggal_akhir']}'),
+                            Text('Jam Kompen: ${history['jam_kompen']}'),
+                            const SizedBox(height: 20),
+                            QrImageView(
+                              data:
+                                  'Anda telah menyelesaikan kompen oleh ${history['kompen']['nama']} dengan UUID_Kompen: ${history['kompen']['UUID_Kompen']}',
+                              version: QrVersions.auto,
+                              size: 200.0,
+                            ),
+                            const SizedBox(height: 20),
+                            ElevatedButton(
+                              child: const Text('Preview PDF'),
+                              onPressed: () => _showPdfPreview(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -46,42 +110,17 @@ class CertificateScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _generatePdf(BuildContext context) async {
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Column(
-              mainAxisAlignment: pw.MainAxisAlignment.center,
-              children: [
-                pw.Text('Surat Penyelesaian Kompen',
-                    style: pw.TextStyle(
-                        fontSize: 24, fontWeight: pw.FontWeight.bold)),
-                pw.SizedBox(height: 20),
-                pw.Text('Nama Kompen: ${history['kompen']['nama_kompen']}'),
-                pw.Text('Deskripsi: ${history['kompen']['deskripsi']}'),
-                pw.Text('Tanggal Mulai: ${history['kompen']['tanggal_mulai']}'),
-                pw.Text('Tanggal Akhir: ${history['kompen']['tanggal_akhir']}'),
-                pw.Text('Jam Kompen: ${history['jam_kompen']}'),
-                pw.SizedBox(height: 20),
-                pw.BarcodeWidget(
-                  barcode: pw.Barcode.qrCode(),
-                  data:
-                      'Anda telah menyelesaikan kompen oleh Dosen dengan UUID_Kompen: ${history['kompen']['UUID_Kompen']}',
-                  width: 200,
-                  height: 200,
-                ),
-              ],
-            ),
-          );
-        },
+  void _showPdfPreview(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: Text('PDF Preview')),
+          body: PdfPreview(
+            build: (format) => generatePdf(context, history),
+          ),
+        ),
       ),
-    );
-
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdf.save(),
     );
   }
 }

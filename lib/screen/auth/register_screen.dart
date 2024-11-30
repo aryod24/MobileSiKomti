@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: <Widget>[
                     // LOGO - using Image.asset directly
                     Image.asset(
-                      '/image/LOGO.png', // Load image from assets
+                      'assets/image/logonew.png', // Load image from assets
                       width: 140, // Adjust width
                       height: 140, // Adjust height
                     ),

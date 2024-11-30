@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sikomti_mobile/services/ProgressApiService.dart';
+import 'package:sikomti_mobile/screen/mhs/progress/detailbukti.dart';
 
 class CheckProgressScreen extends StatefulWidget {
   final String uuidKompen;
@@ -224,9 +225,22 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                                             progress['id_progres'], 0);
                                       } else if (value == 'delete') {
                                         _deleteProgress(progress['id_progres']);
+                                      } else if (value == 'detail') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailBuktiScreen(
+                                                    progress: progress),
+                                          ),
+                                        );
                                       }
                                     },
                                     itemBuilder: (context) => [
+                                      const PopupMenuItem(
+                                        value: 'detail',
+                                        child: Text('Detail'),
+                                      ),
                                       const PopupMenuItem(
                                         value: 'accept',
                                         child: Text('Setujui'),

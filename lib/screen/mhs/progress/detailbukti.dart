@@ -59,29 +59,212 @@ class DetailBuktiScreen extends StatelessWidget {
     final fileName = progress['bukti_kompen'] ?? 'file';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detail Bukti'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+          ),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('UUID Kompen: ${progress['UUID_Kompen']}'),
-            const SizedBox(height: 5),
-            Text('Nama: ${progress['nama'] ?? 'Tidak ada nama'}'),
-            const SizedBox(height: 5),
-            Text('Jam Kompen: ${progress['jam_kompen']}'),
-            const SizedBox(height: 5),
-            Text(
-                'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}'),
-            const SizedBox(height: 5),
-            Text(
-                'Bukti Kompen: ${progress['bukti_kompen'] ?? 'Tidak ada bukti'}'),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _downloadAndOpenFile(context, fileUrl, fileName),
-              child: const Text('Download Bukti'),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      'Detail Bukti',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 1),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 113, 120, 158),
+                              Color.fromARGB(255, 65, 84, 129),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(15),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.description,
+                                    color: Colors.white),
+                                const SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    'UUID Kompen: ${progress['UUID_Kompen']}',
+                                    style: const TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                const Icon(Icons.person, color: Colors.white),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Nama: ${progress['nama'] ?? 'Tidak ada nama'}',
+                                  style: const TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                const Icon(Icons.access_time,
+                                    color: Colors.white),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Jam Kompen: ${progress['jam_kompen']}',
+                                  style: const TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                const Icon(Icons.attach_file,
+                                    color: Colors.white),
+                                const SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    'Bukti Kompen: ${progress['bukti_kompen'] ?? 'Tidak ada bukti'}',
+                                    style: const TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(15),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.start, // Align to the left
+                              children: [
+                                Icon(
+                                  progress['status_acc'] == 1
+                                      ? Icons.check_circle
+                                      : Icons.cancel,
+                                  color: Color.fromARGB(255, 65, 84, 129),
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}',
+                                  style: const TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 65, 84, 129),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(
+                                    width:
+                                        1), // Space between status and download button
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.download, // Download icon
+                                      color: Colors.white, // White icon color
+                                    ),
+                                    const SizedBox(width: 5),
+                                    ElevatedButton(
+                                      onPressed: () => _downloadAndOpenFile(
+                                          context, fileUrl, fileName),
+                                      child: const Text(
+                                        'Download',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color:
+                                              Colors.white, // White text color
+                                        ),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize:
+                                            Size(90, 40), // Smaller button size
+                                        backgroundColor: Color.fromARGB(255, 65,
+                                            84, 129), // Background color
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),

@@ -291,6 +291,7 @@ class _KompenScreenState extends State<KompenScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'create_kompen_fab', // Changed to a unique tag
         onPressed: () {
           Navigator.push(
             context,

@@ -150,34 +150,133 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                         itemBuilder: (context, index) {
                           var request = requestsData[index];
                           return Card(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 16),
+                            margin: const EdgeInsets.all(10),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'UUID Kompen: ${request['UUID_Kompen']}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(255, 113, 120, 158),
+                                        Color.fromARGB(255, 65, 84, 129),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(15),
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                      'Nama Kompen: ${request['kompen_details']['nama_kompen'] ?? 'Tidak ada nama kompen'}'),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                      'Nama: ${request['kompen_details']['nama'] ?? 'Tidak ada nama'}'),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                      'Status: ${request['status_Acc'] == 1 ? 'Diterima' : 'Ditolak'}'),
-                                ],
-                              ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const Icon(Icons.category,
+                                                        color: Colors.white),
+                                                    const SizedBox(width: 2),
+                                                    Text(
+                                                      request['kompen_details']
+                                                              ['nama_kompen'] ??
+                                                          'Tidak ada nama kompen',
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 2),
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                        Icons.description,
+                                                        color: Colors.white70),
+                                                    const SizedBox(width: 5),
+                                                    Expanded(
+                                                      child: Text(
+                                                        'UUID Kompen: ${request['UUID_Kompen']}',
+                                                        style: const TextStyle(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: Colors.white70,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.person,
+                                              color: Colors.white),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            request['kompen_details']['nama'] ??
+                                                'Tidak ada nama',
+                                            style: const TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              color: Colors.white70,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(15),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .start, // Aligned to the left
+                                    children: [
+                                      Icon(
+                                        request['status_Acc'] == 1
+                                            ? Icons.check_circle_outline
+                                            : Icons.cancel,
+                                        color: Color.fromARGB(255, 65, 84, 129),
+                                      ),
+                                      const SizedBox(width: 2),
+                                      Text(
+                                        'Status: ${request['status_Acc'] == 1 ? 'Diterima' : 'Ditolak'}',
+                                        style: const TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color:
+                                              Color.fromARGB(255, 65, 84, 129),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },

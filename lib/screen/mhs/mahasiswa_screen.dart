@@ -57,8 +57,8 @@ class _MahasiswaScreenState extends State<MahasiswaScreen> {
           IconButton(
             icon: Icon(
               Icons.account_circle,
-              color: Colors.black,
-              size: 35,
+              color: const Color.fromARGB(255, 36, 72, 114),
+              size: 40,
             ),
             onPressed: () {
               Navigator.push(

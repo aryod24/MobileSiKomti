@@ -28,7 +28,8 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
       });
     } else {
       setState(() {
-        historyList = Future.value([]); // If no ni, set historyList to an empty list
+        historyList =
+            Future.value([]); // If no ni, set historyList to an empty list
       });
     }
   }
@@ -46,27 +47,29 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
         ),
         child: Column(
           children: [
-            // White Card with 'History Kompen' text
+            const SizedBox(height: 20),
             Card(
-              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                child: const Text(
-                  'History Kompen',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
-                  ),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'History Kompen',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            // FutureBuilder for fetching history data
             Expanded(
               child: FutureBuilder<List<dynamic>>(
                 future: historyList,
@@ -86,48 +89,164 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
                       itemBuilder: (context, index) {
                         var history = historyData[index];
                         return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          margin: const EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          elevation: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nama Kompen: ${history['kompen']['nama_kompen']}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    fontFamily: 'Montserrat',
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(255, 113, 120, 158),
+                                      Color.fromARGB(255, 65, 84, 129),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
                                   ),
                                 ),
-                                const SizedBox(height: 5),
-                                Text('Deskripsi: ${history['kompen']['deskripsi']}'),
-                                const SizedBox(height: 5),
-                                Text('Tanggal Mulai: ${history['kompen']['tanggal_mulai']}'),
-                                const SizedBox(height: 5),
-                                Text('Tanggal Akhir: ${history['kompen']['tanggal_akhir']}'),
-                                const SizedBox(height: 5),
-                                Text('Jam Kompen: ${history['jam_kompen']}'),
-                                const SizedBox(height: 5),
-                                Text('Status: ${history['kompen']['Is_Selesai'] == 1 ? 'Selesai' : 'Belum Selesai'}'),
-                                const SizedBox(height: 5),
-                                ElevatedButton(
-                                  child: const Text('Cetak'),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CertificateScreen(history: history),
-                                      ),
-                                    );
-                                  },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.category,
+                                            color: Colors.white),
+                                        const SizedBox(width: 2),
+                                        Expanded(
+                                          child: Text(
+                                            'Nama Kompen: ${history['kompen']['nama_kompen']}',
+                                            style: const TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.description,
+                                            color: Colors.white70),
+                                        const SizedBox(width: 5),
+                                        Expanded(
+                                          child: Text(
+                                            'Deskripsi: ${history['kompen']['deskripsi']}',
+                                            style: const TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              color: Colors.white70,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.calendar_today,
+                                            color: Colors.white70),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          'Tanggal: ${history['kompen']['tanggal_mulai']} - ${history['kompen']['tanggal_akhir']}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.access_time,
+                                            color: Colors.white70),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          'Jam Kompen: ${history['jam_kompen']}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 16),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.vertical(
+                                    bottom: Radius.circular(15),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          history['kompen']['Is_Selesai'] == 1
+                                              ? Icons.check_circle_outline
+                                              : Icons.cancel,
+                                          color:
+                                              Color.fromARGB(255, 65, 84, 129),
+                                        ),
+                                        const SizedBox(width: 2),
+                                        Text(
+                                          'Status: ${history['kompen']['Is_Selesai'] == 1 ? 'Selesai' : 'Belum Selesai'}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 65, 84, 129),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CertificateScreen(
+                                                    history: history),
+                                          ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 65, 84, 129),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Cetak',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },

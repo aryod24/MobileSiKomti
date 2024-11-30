@@ -83,63 +83,153 @@ class _KompenBuktiState extends State<KompenBukti> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 113, 120, 158),
+                                Color.fromARGB(255, 65, 84, 129),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(15),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Nama: ${progress['kompen']['nama_kompen'] ?? 'Tidak ada nama'}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.category,
+                                            color: Colors.white),
+                                        const SizedBox(width: 5),
+                                        Flexible(
+                                          child: Text(
+                                            'Nama: ${progress['kompen']['nama_kompen'] ?? 'Tidak ada nama'}',
+                                            style: const TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  PopupMenuButton<String>(
+                                    onSelected: (value) {
+                                      if (value == 'Detail') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailBuktiScreen(
+                                                    progress: progress),
+                                          ),
+                                        );
+                                      } else if (value == 'Upload Bukti') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                UploadBuktiScreen(
+                                                    progress: progress),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) {
+                                      return {'Detail', 'Upload Bukti'}
+                                          .map((String choice) {
+                                        return PopupMenuItem<String>(
+                                          value: choice,
+                                          child: Text(choice),
+                                        );
+                                      }).toList();
+                                    },
+                                    icon: const Icon(Icons.more_vert,
+                                        color: Colors.white),
+                                  ),
+                                ],
                               ),
-                              PopupMenuButton<String>(
-                                onSelected: (value) {
-                                  if (value == 'Detail') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailBuktiScreen(
-                                            progress: progress),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  const Icon(Icons.access_time,
+                                      color: Colors.white70),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    'Jam Kompen: ${progress['jam_kompen']}',
+                                    style: const TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Icon(Icons.attach_file,
+                                      color: Colors.white70),
+                                  const SizedBox(width: 5),
+                                  Flexible(
+                                    child: Text(
+                                      'Bukti Kompen: ${progress['bukti_kompen'] ?? 'Tidak ada bukti'}',
+                                      style: const TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        color: Colors.white70,
                                       ),
-                                    );
-                                  } else if (value == 'Upload Bukti') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => UploadBuktiScreen(
-                                            progress: progress),
-                                      ),
-                                    );
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return {'Detail', 'Upload Bukti'}
-                                      .map((String choice) {
-                                    return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: Text(choice),
-                                    );
-                                  }).toList();
-                                },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          const SizedBox(height: 5),
-                          Text('Jam Kompen: ${progress['jam_kompen']}'),
-                          const SizedBox(height: 5),
-                          Text(
-                              'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}'),
-                          const SizedBox(height: 5),
-                          Text(
-                              'Bukti Kompen: ${progress['bukti_kompen'] ?? 'Tidak ada bukti'}'),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 16),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(15),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start, // Aligned to the left
+                            children: [
+                              Icon(
+                                progress['status_acc'] == 1
+                                    ? Icons.check_circle
+                                    : Icons.cancel,
+                                color: Color.fromARGB(255, 65, 84, 129),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}',
+                                style: const TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 65, 84, 129),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },
