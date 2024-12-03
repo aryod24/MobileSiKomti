@@ -115,6 +115,50 @@ class HomepageContent extends StatelessWidget {
 
   HomepageContent({required this.userData});
 
+  Widget _buildMenuButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return Hero(
+      tag: 'menu_button_$label', // Use the label to create a unique tag
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 113, 120, 158),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 40,
+                  color: Colors.white,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -130,11 +174,49 @@ class HomepageContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 1),
+            SizedBox(height: 16),
             ProfilMahasiswa(
               nama: userData['nama'] ?? 'Nama tidak ditemukan',
               ni: userData['ni'] ?? 'NI tidak ditemukan',
               jurusan: userData['jurusan'] ?? 'Jurusan tidak ditemukan',
+            ),
+            SizedBox(height: 24),
+            // Button section
+            GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              children: [
+                _buildMenuButton(
+                  icon: Icons.list_alt,
+                  label: 'List\nPekerjaan',
+                  onTap: () {
+                    // Placeholder for navigation or action
+                  },
+                ),
+                _buildMenuButton(
+                  icon: Icons.assignment_turned_in,
+                  label: 'Pengajuan\nKompen',
+                  onTap: () {
+                    // Placeholder for navigation or action
+                  },
+                ),
+                _buildMenuButton(
+                  icon: Icons.access_time,
+                  label: 'Progres\nKompen',
+                  onTap: () {
+                    // Placeholder for navigation or action
+                  },
+                ),
+                _buildMenuButton(
+                  icon: Icons.assignment,
+                  label: 'Hasil\nKompen',
+                  onTap: () {
+                    // Placeholder for navigation or action
+                  },
+                ),
+              ],
             ),
           ],
         ),
