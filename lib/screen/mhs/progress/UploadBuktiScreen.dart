@@ -46,7 +46,7 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
       }
 
       Response response = await _dio.post(
-        'http://192.168.1.14:8000/api/upload-bukti',
+        'http://127.0.0.1:8000/api/upload-bukti',
         data: formData,
       );
 
@@ -85,7 +85,10 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: SafeArea(
@@ -98,6 +101,7 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
                 ),
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
+                color: const Color(0xFF002366), // Warna card biru
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 8.0),
@@ -106,7 +110,8 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
                       IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context),
-                        color: Colors.black,
+                        color: Colors
+                            .white, // Mengubah ikon menjadi putih agar terlihat jelas
                       ),
                       const Text(
                         'Upload Bukti',
@@ -114,6 +119,8 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
+                          color:
+                              Colors.white, // Mengubah warna teks menjadi putih
                         ),
                       ),
                     ],
@@ -145,8 +152,8 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
-                              Color.fromARGB(255, 113, 120, 158),
-                              Color.fromARGB(255, 65, 84, 129),
+                              Color(0xFF00509E),
+                              Color(0xFF002366),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -202,8 +209,8 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
-                              Color.fromARGB(255, 113, 120, 158),
-                              Color.fromARGB(255, 65, 84, 129),
+                              Color(0xFF00509E),
+                              Color(0xFF002366),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,

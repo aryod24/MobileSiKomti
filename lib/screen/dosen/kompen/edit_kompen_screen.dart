@@ -113,6 +113,27 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
     super.dispose();
   }
 
+  // Fungsi untuk membangun TextField
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(), // Border yang sederhana
+        ),
+        validator: validator,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,53 +146,52 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
+              _buildTextField(
                 controller: _namaKompenController,
-                decoration: InputDecoration(labelText: 'Nama Kompen'),
+                label: 'Nama Kompen',
                 validator: (value) =>
                     value!.isEmpty ? 'Nama Kompen tidak boleh kosong' : null,
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _deskripsiController,
-                decoration: InputDecoration(labelText: 'Deskripsi'),
+                label: 'Deskripsi',
                 validator: (value) =>
                     value!.isEmpty ? 'Deskripsi tidak boleh kosong' : null,
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _jenisTugasController,
-                decoration: InputDecoration(labelText: 'Jenis Tugas'),
+                label: 'Jenis Tugas',
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _quotaController,
-                decoration: InputDecoration(labelText: 'Quota'),
+                label: 'Quota',
                 keyboardType: TextInputType.number,
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _jamKompenController,
-                decoration: InputDecoration(labelText: 'Jam Kompen'),
+                label: 'Jam Kompen',
                 keyboardType: TextInputType.number,
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _statusDibukaController,
-                decoration:
-                    InputDecoration(labelText: 'Status Dibuka (1=Ya, 0=Tidak)'),
+                label: 'Status Dibuka (1=Ya, 0=Tidak)',
                 keyboardType: TextInputType.number,
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _tanggalMulaiController,
-                decoration: InputDecoration(labelText: 'Tanggal Mulai'),
+                label: 'Tanggal Mulai',
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _tanggalAkhirController,
-                decoration: InputDecoration(labelText: 'Tanggal Akhir'),
+                label: 'Tanggal Akhir',
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _periodeKompenController,
-                decoration: InputDecoration(labelText: 'Periode Kompen'),
+                label: 'Periode Kompen',
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _idKompetensiController,
-                decoration: InputDecoration(labelText: 'ID Kompetensi'),
+                label: 'ID Kompetensi',
               ),
               SizedBox(height: 20),
               ElevatedButton(

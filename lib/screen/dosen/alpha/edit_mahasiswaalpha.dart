@@ -43,6 +43,27 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
     super.dispose();
   }
 
+  // Function to build text fields consistently
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(), // Simple border
+        ),
+        validator: validator,
+      ),
+    );
+  }
+
   void _updateMahasiswaAlpha() async {
     if (_formKey.currentState!.validate()) {
       final updatedMahasiswaAlpha = MahasiswaAlpha(
@@ -91,9 +112,9 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
+              _buildTextField(
                 controller: _niController,
-                decoration: InputDecoration(labelText: 'NIM'),
+                label: 'NIM',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter NIM';
@@ -101,9 +122,9 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
                   return null;
                 },
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _namaController,
-                decoration: InputDecoration(labelText: 'Nama'),
+                label: 'Nama',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter Nama';
@@ -111,9 +132,9 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
                   return null;
                 },
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _jamAlphaController,
-                decoration: InputDecoration(labelText: 'Jam Alpha'),
+                label: 'Jam Alpha',
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -122,9 +143,9 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
                   return null;
                 },
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _semesterController,
-                decoration: InputDecoration(labelText: 'Semester'),
+                label: 'Semester',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter Semester';
@@ -132,9 +153,9 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
                   return null;
                 },
               ),
-              TextFormField(
+              _buildTextField(
                 controller: _jamKompenController,
-                decoration: InputDecoration(labelText: 'Jam Kompen'),
+                label: 'Jam Kompen',
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {

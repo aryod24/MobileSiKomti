@@ -5,7 +5,8 @@ class ProfilMahasiswa extends StatelessWidget {
   final String ni;
   final String jurusan;
 
-  ProfilMahasiswa({required this.nama, required this.ni, required this.jurusan});
+  ProfilMahasiswa(
+      {required this.nama, required this.ni, required this.jurusan});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class ProfilMahasiswa extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [
-              Color.fromARGB(255, 113, 120, 158),
-              Color.fromARGB(255, 65, 84, 129),
+              Color(0xFF00509E),
+              Color(0xFF002366),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -65,9 +66,11 @@ class ProfilMahasiswa extends StatelessWidget {
             ),
             // Logo Mahasiswa di sebelah kanan
             Image.asset(
-              'assets/image/logomhs.png', // ganti dengan path logo yang sesuai
+              'assets/image/student.png', // ganti dengan path logo yang sesuai
               width: 60,
               height: 60,
+              color: Colors.white,
+              colorBlendMode: BlendMode.modulate,
             ),
           ],
         ),

@@ -64,7 +64,10 @@ class DetailBuktiScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
@@ -76,6 +79,7 @@ class DetailBuktiScreen extends StatelessWidget {
               ),
               elevation: 4,
               margin: const EdgeInsets.symmetric(horizontal: 20),
+              color: const Color(0xFF002366), // Warna card biru
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -86,7 +90,7 @@ class DetailBuktiScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      color: Colors.black,
+                      color: Colors.white, // Warna ikon putih
                     ),
                     const Text(
                       'Detail Bukti',
@@ -94,6 +98,7 @@ class DetailBuktiScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Montserrat',
+                        color: Colors.white, // Warna teks putih
                       ),
                     ),
                   ],
@@ -115,8 +120,8 @@ class DetailBuktiScreen extends StatelessWidget {
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Color.fromARGB(255, 113, 120, 158),
-                              Color.fromARGB(255, 65, 84, 129),
+                              Color(0xFF00509E),
+                              Color(0xFF002366),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -225,14 +230,14 @@ class DetailBuktiScreen extends StatelessWidget {
                                   progress['status_acc'] == 1
                                       ? Icons.check_circle
                                       : Icons.cancel,
-                                  color: Color.fromARGB(255, 65, 84, 129),
+                                  color: Color(0xFF00509E),
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
                                   'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}',
                                   style: const TextStyle(
                                     fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 65, 84, 129),
+                                    color: Color(0xFF00509E),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -260,8 +265,8 @@ class DetailBuktiScreen extends StatelessWidget {
                                       style: ElevatedButton.styleFrom(
                                         minimumSize:
                                             Size(90, 40), // Smaller button size
-                                        backgroundColor: Color.fromARGB(255, 65,
-                                            84, 129), // Background color
+                                        backgroundColor: Color(
+                                            0xFF00509E), // Background color
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),

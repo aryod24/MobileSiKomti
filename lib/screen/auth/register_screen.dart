@@ -25,7 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-    // Call the registration service
     try {
       final response = await _registerService.register(
         username: _usernameController.text,
@@ -38,9 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
       );
 
-      // Check for success in response
       if (response['success']) {
-        // Show success dialog
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -63,7 +60,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           },
         );
       } else {
-        // Show error message from response
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(response['message'] ??
@@ -71,7 +67,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       }
     } catch (e) {
-      // Handle any errors during registration
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('An error occurred. Please try again.')),
       );
@@ -84,7 +79,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    // Dispose controllers to free up resources
     _usernameController.dispose();
     _namaController.dispose();
     _jurusanController.dispose();
@@ -98,90 +92,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 125, 167, 223),
-              Color.fromARGB(255, 235, 218, 191),
+      resizeToAvoidBottomInset:
+          true, // Memastikan layar menyesuaikan dengan keyboard
+      body: SafeArea(
+        child: Container(
+          color: Colors.white, // Mengganti background menjadi putih
+          child: Stack(
+            children: <Widget>[
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        // LOGO
+                        Image.asset(
+                          'assets/image/logonew.png',
+                          width: 140,
+                          height: 140,
+                        ),
+                        const SizedBox(height: 40),
+                        const Text(
+                          'Daftar Akun',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            color: Colors.black, // Warna teks menjadi hitam
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 30),
+                        _buildTextField(_usernameController, 'Username'),
+                        const SizedBox(height: 20),
+                        _buildTextField(_namaController, 'Nama'),
+                        const SizedBox(height: 20),
+                        _buildTextField(_jurusanController, 'Jurusan'),
+                        const SizedBox(height: 20),
+                        _buildTextField(_niController, 'Nomor Induk'),
+                        const SizedBox(height: 20),
+                        _buildTextField(_passwordController, 'Password',
+                            obscureText: true),
+                        const SizedBox(height: 20),
+                        _buildTextField(
+                            _passwordConfirmationController, 'Confirm Password',
+                            obscureText: true),
+                        const SizedBox(height: 20),
+                        _buildTextField(_levelIdController, 'Level ID'),
+                        const SizedBox(height: 30),
+                        _isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : _buildRegisterButton(context),
+                        const SizedBox(height: 20),
+                        _buildLoginPrompt(context),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    // LOGO - using Image.asset directly
-                    Image.asset(
-                      'assets/image/logonew.png', // Load image from assets
-                      width: 140, // Adjust width
-                      height: 140, // Adjust height
-                    ),
-                    const SizedBox(height: 40),
-                    const Text(
-                      'Daftar Akun',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 30),
-                    // Input fields
-                    _buildTextField(_usernameController, 'Username'),
-                    const SizedBox(height: 20),
-                    _buildTextField(_namaController, 'Nama'),
-                    const SizedBox(height: 20),
-                    _buildTextField(_jurusanController, 'Jurusan'),
-                    const SizedBox(height: 20),
-                    _buildTextField(_niController, 'Nomor Induk'),
-                    const SizedBox(height: 20),
-                    _buildTextField(_passwordController, 'Password',
-                        obscureText: true),
-                    const SizedBox(height: 20),
-                    _buildTextField(
-                        _passwordConfirmationController, 'Confirm Password',
-                        obscureText: true),
-                    const SizedBox(height: 20),
-                    _buildTextField(_levelIdController, 'Level ID'),
-
-                    const SizedBox(height: 30),
-                    // Loading indicator or button
-                    if (_isLoading)
-                      Center(child: CircularProgressIndicator())
-                    else
-                      _buildRegisterButton(context),
-
-                    const SizedBox(height: 20),
-                    // Login Prompt
-                    _buildLoginPrompt(context),
-                  ],
-                ),
-              ),
-            ),
-            // Back Button
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Kembali ke halaman sebelumnya
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                  color: Colors.black54,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -211,27 +182,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       width: 250,
       height: 60,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Color.fromARGB(255, 113, 120, 158),
-            Color.fromARGB(255, 65, 84, 129),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: Color(0xFF002366), // Mengubah warna tombol
         borderRadius: BorderRadius.circular(20),
       ),
       child: ElevatedButton(
-        onPressed: () {
-          if (!_isLoading) {
-            // Prevent multiple taps during loading
-            _register();
-          }
-        },
+        onPressed: !_isLoading ? _register : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
         ),
         child: const Text(
           'Daftar',
@@ -249,7 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildLoginPrompt(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
         );
@@ -259,7 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         style: TextStyle(
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: Colors.black, // Warna teks menjadi hitam
         ),
       ),
     );

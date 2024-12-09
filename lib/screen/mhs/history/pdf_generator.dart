@@ -85,8 +85,6 @@ Future<Uint8List> generatePdf(
             pw.SizedBox(height: 5),
             _buildRow('Nama Mahasiswa', history['nama']),
             _buildRow('NIM', history['ni']),
-            _buildRow('Kelas', history['kelas']),
-            _buildRow('Semester', history['semester']),
             _buildRow('Pekerjaan', history['kompen']['nama_kompen']),
             _buildRow('Jumlah Jam', '${history['jam_kompen']} jam'),
             pw.SizedBox(height: 20),

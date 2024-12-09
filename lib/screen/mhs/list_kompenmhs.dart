@@ -147,7 +147,7 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
           ),
         ),
         child: Column(
@@ -157,6 +157,7 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 4,
+              color: const Color(0xFF002366), // Warna card biru
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Row(
@@ -167,6 +168,7 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Montserrat',
+                        color: Colors.white, // Warna teks putih
                       ),
                     ),
                   ],
@@ -231,8 +233,8 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                                       decoration: const BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
-                                            Color.fromARGB(255, 113, 120, 158),
-                                            Color.fromARGB(255, 65, 84, 129),
+                                            Color(0xFF00509E),
+                                            Color(0xFF002366),
                                           ],
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
@@ -388,7 +390,7 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                                             : () => _showRequestDialog(
                                                 kompen['UUID_Kompen']),
                                         icon: const Icon(Icons.flag,
-                                            color: Colors.blueAccent),
+                                            color: Color.fromARGB(188, 0, 79, 158)),
                                       ),
                                     ],
                                   ),

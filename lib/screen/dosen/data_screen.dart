@@ -44,7 +44,7 @@ class _DataScreenState extends State<DataScreen> {
     );
   }
 
-// In your TableRow for the header
+  // In your TableRow for the header
   TableRow mahasiswaRow(BuildContext context, MahasiswaAlpha mahasiswa) {
     return TableRow(
       decoration: BoxDecoration(
@@ -76,9 +76,36 @@ class _DataScreenState extends State<DataScreen> {
               }
             },
             itemBuilder: (context) => [
-              PopupMenuItem(value: 'Detail', child: Text('Detail')),
-              PopupMenuItem(value: 'Edit', child: Text('Edit')),
-              PopupMenuItem(value: 'Delete', child: Text('Delete')),
+              PopupMenuItem(
+                value: 'Detail',
+                child: Row(
+                  children: [
+                    Icon(Icons.visibility, color: const Color.fromARGB(255, 6, 104, 185), size: 20), // Icon for Detail
+                    SizedBox(width: 10),
+                    Text('Detail'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'Edit',
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, color: Colors.orange, size: 20), // Icon for Edit
+                    SizedBox(width: 10),
+                    Text('Edit'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'Delete',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, color: Colors.red, size: 20), // Icon for Delete
+                    SizedBox(width: 10),
+                    Text('Delete'),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -91,20 +118,63 @@ class _DataScreenState extends State<DataScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Detail Mahasiswa Alpha'),
-          content: Text(
-            'NIM: ${item.ni}\nNama: ${item.nama}\nSemester: ${item.semester}\nJam Alpha: ${item.jamAlpha}\nJam Kompen: ${item.jamKompen}',
+          backgroundColor: const Color(0xFF3949AB), // Warna latar belakang biru
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Text(
+            'Detail Mahasiswa Alpha',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _detailRow(Icons.person, 'NIM', item.ni),
+              _detailRow(Icons.account_circle, 'Nama', item.nama ?? 'Tidak Ada'),
+              _detailRow(Icons.school, 'Semester', item.semester.toString()),
+              _detailRow(Icons.alarm, 'Jam Alpha', item.jamAlpha.toString()),
+              _detailRow(
+                Icons.check_circle,
+                'Jam Kompen',
+                item.jamKompen?.toString() ?? 'N/A',
+              ),
+            ],
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: Text(
+                'Close',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         );
       },
+    );
+  }
+
+  Widget _detailRow(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.white),
+          SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '$label: $value',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

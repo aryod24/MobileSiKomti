@@ -65,7 +65,7 @@ class ProfilDosen extends StatelessWidget {
             ),
             // Logo Dosen di sebelah kanan
             Image.asset(
-              'assets/image/logomhs.png', // ganti dengan path logo yang sesuai
+              'assets/image/teach.png', // ganti dengan path logo yang sesuai
               width: 60,
               height: 60,
             ),

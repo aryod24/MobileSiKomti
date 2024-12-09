@@ -12,8 +12,8 @@ class BotNavMhs extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(255, 113, 120, 158),
-            Color.fromARGB(255, 65, 84, 129),
+            Color.fromARGB(255, 255, 255, 255),
+            Color.fromARGB(255, 255, 255, 255),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -30,10 +30,9 @@ class BotNavMhs extends StatelessWidget {
         currentIndex: selectedIndex,
         onTap: onItemTapped,
         backgroundColor:
-            Colors.transparent, // Membuat latar belakang transparan
-        selectedItemColor: Colors.white, // Warna untuk item yang dipilih
-        unselectedItemColor:
-            Colors.white70, // Warna untuk item yang tidak dipilih
+            const Color.fromARGB(255, 255, 255, 255), // Membuat latar belakang transparan
+        selectedItemColor: Color(0xFF00509E), // Warna item yang dipilih menjadi BIRU
+        unselectedItemColor: Color.fromARGB(76, 0, 79, 158),  // Warna item yang tidak dipilih
         type: BottomNavigationBarType.fixed,
         selectedLabelStyle: const TextStyle(
             fontFamily: 'Poppins'), // Gunakan Poppins untuk label yang dipilih

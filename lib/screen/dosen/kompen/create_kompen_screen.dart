@@ -26,9 +26,30 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
   bool _isLoading = false;
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.1.6:8000/api/', // Replace with your API URL
+      baseUrl: 'http://127.0.0.1:8000/api', // Replace with your API URL
     ),
   );
+
+  // Function to build TextField widgets
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(),
+        ),
+        validator: validator,
+      ),
+    );
+  }
 
   Future<void> createKompen() async {
     setState(() {
@@ -122,117 +143,130 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Input fields
-            TextField(
-              controller: _namaKompenController,
-              decoration: InputDecoration(labelText: 'Nama Kompen'),
-            ),
-            TextField(
-              controller: _deskripsiController,
-              decoration: InputDecoration(labelText: 'Deskripsi'),
-            ),
-            DropdownButtonFormField<String>(
-              value: _selectedJenisTugas,
-              decoration: InputDecoration(labelText: 'Jenis Tugas'),
-              items: [
-                DropdownMenuItem(value: '1', child: Text('Penelitian')),
-                DropdownMenuItem(value: '2', child: Text('Pengabdian')),
-                DropdownMenuItem(value: '3', child: Text('Teknis')),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  _selectedJenisTugas = value;
-                });
-              },
-            ),
-            TextField(
-              controller: _quotaController,
-              decoration: InputDecoration(labelText: 'Quota'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: _jamKompenController,
-              decoration: InputDecoration(labelText: 'Jam Kompen'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: _periodeKompenController,
-              decoration: InputDecoration(labelText: 'Periode Kompen'),
-            ),
-            DropdownButtonFormField<String>(
-              value: _selectedStatusDibuka,
-              decoration: InputDecoration(labelText: 'Status Dibuka'),
-              items: [
-                DropdownMenuItem(value: 'Dibuka', child: Text('Dibuka')),
-                DropdownMenuItem(value: 'Ditutup', child: Text('Ditutup')),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  _selectedStatusDibuka = value;
-                });
-              },
-            ),
-            TextField(
-              controller: _tanggalMulaiController,
-              decoration:
-                  InputDecoration(labelText: 'Tanggal Mulai (YYYY-MM-DD)'),
-            ),
-            TextField(
-              controller: _tanggalAkhirController,
-              decoration:
-                  InputDecoration(labelText: 'Tanggal Akhir (YYYY-MM-DD)'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Is Selesai'),
-                Switch(
-                  value: _isSelesai,
-                  onChanged: (value) {
-                    setState(() {
-                      _isSelesai = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            DropdownButtonFormField<String>(
-              value: _selectedIdKompetensi,
-              decoration: InputDecoration(labelText: 'ID Kompetensi'),
-              items: [
-                DropdownMenuItem(value: '1', child: Text('Analisis Data')),
-                DropdownMenuItem(
-                    value: '2', child: Text('Keterampilan Komunikasi')),
-                DropdownMenuItem(value: '3', child: Text('Digital Marketing')),
-                DropdownMenuItem(value: '4', child: Text('UI/UX Design')),
-                DropdownMenuItem(value: '5', child: Text('Sistem Operasi')),
-                DropdownMenuItem(
-                    value: '6', child: Text('Analisis dan Desain Sistem')),
-                DropdownMenuItem(value: '7', child: Text('Jaringan Komputer')),
-                DropdownMenuItem(value: '8', child: Text('Pengolahan Data')),
-                DropdownMenuItem(value: '9', child: Text('Pengembangan Web')),
-                DropdownMenuItem(
-                    value: '10', child: Text('Manajemen Database')),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  _selectedIdKompetensi = value;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            // Loading indicator or button
-            if (_isLoading)
-              Center(child: CircularProgressIndicator())
-            else
-              ElevatedButton(
-                onPressed: createKompen,
-                child: Text('Submit'),
+        child: Form(
+          child: ListView(
+            children: [
+              _buildTextField(
+                controller: _namaKompenController,
+                label: 'Nama Kompen',
               ),
-          ],
+              _buildTextField(
+                controller: _deskripsiController,
+                label: 'Deskripsi',
+              ),
+              _buildTextField(
+                controller: _quotaController,
+                label: 'Quota',
+                keyboardType: TextInputType.number,
+              ),
+              _buildTextField(
+                controller: _jamKompenController,
+                label: 'Jam Kompen',
+                keyboardType: TextInputType.number,
+              ),
+              _buildTextField(
+                controller: _periodeKompenController,
+                label: 'Periode Kompen',
+              ),
+              _buildTextField(
+                controller: _tanggalMulaiController,
+                label: 'Tanggal Mulai (YYYY-MM-DD)',
+              ),
+              _buildTextField(
+                controller: _tanggalAkhirController,
+                label: 'Tanggal Akhir (YYYY-MM-DD)',
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Is Selesai'),
+                  Switch(
+                    value: _isSelesai,
+                    onChanged: (value) {
+                      setState(() {
+                        _isSelesai = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              DropdownButtonFormField<String>(
+                value: _selectedJenisTugas,
+                decoration: InputDecoration(
+                  labelText: 'Jenis Tugas',
+                  border: OutlineInputBorder(), // Border around dropdown
+                ),
+                items: [
+                  DropdownMenuItem(value: '1', child: Text('Penelitian')),
+                  DropdownMenuItem(value: '2', child: Text('Pengabdian')),
+                  DropdownMenuItem(value: '3', child: Text('Teknis')),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedJenisTugas = value;
+                  });
+                },
+              ),
+              SizedBox(height: 16), // Add space between fields
+
+              DropdownButtonFormField<String>(
+                value: _selectedStatusDibuka,
+                decoration: InputDecoration(
+                  labelText: 'Status Dibuka',
+                  border: OutlineInputBorder(), // Border around dropdown
+                ),
+                items: [
+                  DropdownMenuItem(value: 'Dibuka', child: Text('Dibuka')),
+                  DropdownMenuItem(value: 'Ditutup', child: Text('Ditutup')),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedStatusDibuka = value;
+                  });
+                },
+              ),
+              SizedBox(height: 16), // Add space between fields
+
+              DropdownButtonFormField<String>(
+                value: _selectedIdKompetensi,
+                decoration: InputDecoration(
+                  labelText: 'ID Kompetensi',
+                  border: OutlineInputBorder(), // Border around dropdown
+                ),
+                items: [
+                  DropdownMenuItem(value: '1', child: Text('Analisis Data')),
+                  DropdownMenuItem(
+                      value: '2', child: Text('Keterampilan Komunikasi')),
+                  DropdownMenuItem(
+                      value: '3', child: Text('Digital Marketing')),
+                  DropdownMenuItem(value: '4', child: Text('UI/UX Design')),
+                  DropdownMenuItem(value: '5', child: Text('Sistem Operasi')),
+                  DropdownMenuItem(
+                      value: '6', child: Text('Analisis dan Desain Sistem')),
+                  DropdownMenuItem(
+                      value: '7', child: Text('Jaringan Komputer')),
+                  DropdownMenuItem(value: '8', child: Text('Pengolahan Data')),
+                  DropdownMenuItem(value: '9', child: Text('Pengembangan Web')),
+                  DropdownMenuItem(
+                      value: '10', child: Text('Manajemen Database')),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedIdKompetensi = value;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              // Loading indicator or button
+              if (_isLoading)
+                Center(child: CircularProgressIndicator())
+              else
+                ElevatedButton(
+                  onPressed: createKompen,
+                  child: Text('Submit'),
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -26,6 +26,8 @@ dependencies:
   universal_io: ^2.0.4
   open_filex: ^4.5.0
   qr_flutter: ^4.1.0
+  cached_network_image: ^3.2.0
+  image_picker: ^1.0.2
 
 
 dev_dependencies:
@@ -45,6 +47,8 @@ flutter:
     - assets/image/LOGO.png
     - assets/image/polinema-bw.png
     - assets/image/logonew.png
+    - assets/image/student.png
+    - assets/image/teach.png
   fonts:
     - family: Montserrat
       fonts:

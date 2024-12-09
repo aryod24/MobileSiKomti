@@ -38,7 +38,7 @@ class _MahasiswaScreenState extends State<MahasiswaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFED7C3),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
         title: Text(
           'SiKomti',
@@ -57,7 +57,7 @@ class _MahasiswaScreenState extends State<MahasiswaScreen> {
           IconButton(
             icon: Icon(
               Icons.account_circle,
-              color: const Color.fromARGB(255, 36, 72, 114),
+              color: const Color.fromARGB(255, 0, 0, 0),
               size: 40,
             ),
             onPressed: () {
@@ -69,7 +69,7 @@ class _MahasiswaScreenState extends State<MahasiswaScreen> {
           ),
         ],
       ),
-      backgroundColor: Color(0xFFFEEFE5),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: FutureBuilder<Map<String, String>>(
         future: getUserData(),
         builder: (context, snapshot) {
@@ -121,10 +121,10 @@ class HomepageContent extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Hero(
-      tag: 'menu_button_$label', // Use the label to create a unique tag
+      tag: 'menu_button_$label', // Gunakan label untuk tag unik
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 113, 120, 158),
+          color: Color(0xFF00509E), // Warna biru menu
           borderRadius: BorderRadius.circular(10),
         ),
         child: Material(
@@ -168,19 +168,22 @@ class HomepageContent extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16),
+            SizedBox(height: 0),
             ProfilMahasiswa(
               nama: userData['nama'] ?? 'Nama tidak ditemukan',
               ni: userData['ni'] ?? 'NI tidak ditemukan',
               jurusan: userData['jurusan'] ?? 'Jurusan tidak ditemukan',
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 20),
             // Button section
             GridView.count(
               shrinkWrap: true,

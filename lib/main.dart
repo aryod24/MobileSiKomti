@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aplikasi Kompen',
       initialRoute: '/login',
+      debugShowCheckedModeBanner: false,
       routes: {
         '/login': (context) => LoginScreen(),
       },

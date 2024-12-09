@@ -43,6 +43,7 @@ class _KompenBuktiState extends State<KompenBukti> {
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 4,
+          color: const Color(0xFF002366), // Warna card biru
           child: const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
@@ -53,6 +54,7 @@ class _KompenBuktiState extends State<KompenBukti> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Montserrat',
+                    color: Colors.white, // Teks putih agar kontras dengan warna biru
                   ),
                 ),
               ],
@@ -90,8 +92,8 @@ class _KompenBuktiState extends State<KompenBukti> {
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color.fromARGB(255, 113, 120, 158),
-                                Color.fromARGB(255, 65, 84, 129),
+                                Color(0xFF00509E),
+                                Color(0xFF002366),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -215,14 +217,14 @@ class _KompenBuktiState extends State<KompenBukti> {
                                 progress['status_acc'] == 1
                                     ? Icons.check_circle
                                     : Icons.cancel,
-                                color: Color.fromARGB(255, 65, 84, 129),
+                                color: Color(0xFF00509E),
                               ),
                               const SizedBox(width: 5),
                               Text(
                                 'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}',
                                 style: const TextStyle(
                                   fontFamily: 'Montserrat',
-                                  color: Color.fromARGB(255, 65, 84, 129),
+                                  color: Color(0xFF00509E),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
