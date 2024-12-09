@@ -41,7 +41,10 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+                    colors: [
+                      Color.fromARGB(255, 250, 250, 250),
+                      Color.fromARGB(255, 255, 255, 255)
+                    ],
                   ),
                 ),
                 child: Column(
@@ -66,6 +69,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 4,
+      color: const Color(0xFF002366), // Mengatur warna card menjadi biru
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
@@ -75,6 +79,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              color: Colors.white, // Mengubah warna ikon menjadi putih
             ),
             const SizedBox(width: 8),
             const Text(
@@ -83,6 +88,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Montserrat',
+                color: Colors.white, // Mengubah warna teks menjadi putih
               ),
             ),
           ],
@@ -163,8 +169,8 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            Color.fromARGB(255, 113, 120, 158),
-            const Color.fromARGB(255, 65, 84, 129),
+            Color(0xFF00509E),
+            Color(0xFF002366),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

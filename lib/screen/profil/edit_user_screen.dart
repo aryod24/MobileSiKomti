@@ -104,7 +104,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit User'),
+        title: const Text(''),
         automaticallyImplyLeading: false, // Remove back button if not needed
       ),
       body: Center(
@@ -128,7 +128,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color:Color(0xFF00509E),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -196,13 +196,16 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: _updateUser,
-                              child: const Text('Perbarui Data'),
+                              child: const Text(
+                                'Perbarui Data',
+                                style: TextStyle(color: Colors.white), // Mengubah warna teks menjadi putih
+                              ),
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(double.infinity, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                backgroundColor: Colors.blueAccent,
+                                backgroundColor: Color(0xFF00509E),
                               ),
                             ),
                           ),
@@ -211,7 +214,10 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: _cancelEdit,
-                              child: const Text('Batal'),
+                              child: const Text(
+                                'Batal',
+                                style: TextStyle(color: Colors.white), // Mengubah warna teks menjadi putih
+                              ),
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(double.infinity, 50),
                                 shape: RoundedRectangleBorder(

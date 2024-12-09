@@ -44,36 +44,36 @@ class _KompenScreenState extends State<KompenScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
           children: [
-            // SizedBox to add space between the top and the card
-            SizedBox(height: 1), // Adjust the height to modify the space
-
-            // Adjust the card to be closer to the top
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 4,
-              margin: EdgeInsets.symmetric(
-                  horizontal: 10), // Add margin to the card
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    Text(
-                      'List Kompen',
+            SizedBox(height: 1),
+            Center(
+              child: Container(
+                width: 400,
+                child: Card(
+                  elevation: 4,
+                  color: Color(0xFF002366), // Warna biru header
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'List Daftar Kompen',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white, // Teks putih
                         fontFamily: 'Montserrat',
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -114,8 +114,8 @@ class _KompenScreenState extends State<KompenScreen> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color.fromARGB(255, 113, 120, 158),
-                                      Color.fromARGB(255, 65, 84, 129),
+                                      Color(0xFF00509E),
+                                      Color(0xFF002366),
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,

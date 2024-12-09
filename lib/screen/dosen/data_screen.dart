@@ -118,7 +118,7 @@ class _DataScreenState extends State<DataScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFF3949AB), // Warna latar belakang biru
+          backgroundColor: Color(0xFF00509E), // Warna latar belakang biru
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -255,31 +255,33 @@ class _DataScreenState extends State<DataScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
           ),
         ),
         child: Column(
           children: [
-            const SizedBox(height: 1), // Jarak awal
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    Text(
+            const SizedBox(height: 1),
+            Center(
+              child: Container(
+                width: 400,
+                child: Card(
+                  elevation: 4,
+                  color: Color(0xFF002366), // Warna biru header
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
                       'Data Mahasiswa Alpha',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white, // Teks putih
                         fontFamily: 'Montserrat',
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -319,8 +321,8 @@ class _DataScreenState extends State<DataScreen> {
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color.fromARGB(255, 113, 120, 158),
-                                    Color.fromARGB(255, 65, 84, 129),
+                                    Color(0xFF00509E),
+                                    Color(0xFF002366),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.vertical(

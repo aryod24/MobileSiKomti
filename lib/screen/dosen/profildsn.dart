@@ -19,8 +19,8 @@ class ProfilDosen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [
-              Color.fromARGB(255, 113, 120, 158),
-              Color.fromARGB(255, 65, 84, 129),
+              Color(0xFF00509E),
+              Color(0xFF002366),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

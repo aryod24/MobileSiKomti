@@ -76,7 +76,7 @@ class PengajuanScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)], // Gradient colors
+            colors:[Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)], // Gradient colors
           ),
         ),
         child: Padding(
@@ -84,36 +84,38 @@ class PengajuanScreen extends StatelessWidget {
           child: Column(
             children: [
               // Card with Back Button
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              color: const Color(0xFF002366), // Mengatur warna card menjadi biru
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context); // Tombol back
+                      },
+                      color: Colors.white, // Mengubah warna ikon menjadi putih
+                    ),
+                    const Text(
+                      'Detail Pengajuan',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
+                        color: Colors.white, // Mengubah warna teks menjadi putih
                       ),
-                      SizedBox(width: 8),
-                      Text(
-                        'Data Pengajuan Kompen',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    const Spacer(),
+                  ],
                 ),
               ),
+            ),
               SizedBox(height: 10), // Space between card and data table
               Expanded(
                 child: FutureBuilder<Map<String, dynamic>>(
@@ -152,8 +154,8 @@ class PengajuanScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Color.fromARGB(255, 113, 120, 158),
-                                        Color.fromARGB(255, 65, 84, 129),
+                                        Color(0xFF00509E),
+                                        Color(0xFF002366),
                                       ],
                                     ),
                                     borderRadius: BorderRadius.only(

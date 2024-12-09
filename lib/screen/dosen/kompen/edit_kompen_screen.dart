@@ -196,7 +196,7 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _updateKompen,
-                child: Text('Perbarui Kompen'),
+                child: Text('Update'),
               ),
             ],
           ),

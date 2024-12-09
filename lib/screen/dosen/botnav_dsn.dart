@@ -9,16 +9,7 @@ class BotNavDosen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 113, 120, 158),
-            Color.fromARGB(255, 65, 84, 129),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      color: Colors.white, // Latar belakang putih
       child: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -31,16 +22,19 @@ class BotNavDosen extends StatelessWidget {
         ],
         currentIndex: selectedIndex,
         onTap: onItemTapped,
-        backgroundColor:
-            Colors.transparent, // Membuat latar belakang transparan
-        selectedItemColor: Colors.white, // Warna untuk item yang dipilih
+        backgroundColor: const Color.fromARGB(
+            255, 255, 255, 255), // Warna latar belakang putih
+        selectedItemColor:
+            Color(0xFF00509E), // Warna item yang dipilih menjadi BIRU
         unselectedItemColor:
-            Colors.white70, // Warna untuk item yang tidak dipilih
+            Color.fromARGB(76, 0, 79, 158), // Warna item yang tidak dipilih
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle:
-            TextStyle(fontFamily: 'Poppins'), // Use Poppins for selected label
+        selectedLabelStyle: TextStyle(
+          fontFamily: 'Poppins', // Font untuk label yang dipilih
+        ),
         unselectedLabelStyle: TextStyle(
-            fontFamily: 'Poppins'), // Use Poppins for unselected label
+          fontFamily: 'Poppins', // Font untuk label yang tidak dipilih
+        ),
       ),
     );
   }

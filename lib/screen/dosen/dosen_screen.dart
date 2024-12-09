@@ -40,13 +40,7 @@ class _DosenScreenState extends State<DosenScreen> {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
-          ),
-        ),
+        color: Colors.white, // Latar belakang putih
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,6 +56,7 @@ class _DosenScreenState extends State<DosenScreen> {
                 width: 400,
                 child: Card(
                   elevation: 4,
+                  color: Color(0xFF002366), // Warna biru header
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -72,6 +67,7 @@ class _DosenScreenState extends State<DosenScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white, // Teks putih
                         fontFamily: 'Montserrat',
                       ),
                     ),
@@ -136,7 +132,7 @@ class _DosenScreenState extends State<DosenScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFED7C3),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255), // Biru seperti pada gambar
         elevation: 0,
         title: Text(
           'SiKomti',
@@ -144,7 +140,7 @@ class _DosenScreenState extends State<DosenScreen> {
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
             fontSize: 25,
-            color: Colors.black,
+            color: const Color.fromARGB(255, 0, 0, 0), // Teks putih
           ),
         ),
         leading: Padding(
@@ -155,7 +151,7 @@ class _DosenScreenState extends State<DosenScreen> {
           IconButton(
             icon: Icon(
               Icons.account_circle,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 0, 0, 0),
               size: 35,
             ),
             onPressed: () {
@@ -167,7 +163,7 @@ class _DosenScreenState extends State<DosenScreen> {
           ),
         ],
       ),
-      backgroundColor: Color(0xFFFEEFE5),
+      backgroundColor: Colors.white, // Latar belakang putih
       body: FutureBuilder<Map<String, String>>(
         future: getUserData(),
         builder: (context, snapshot) {
@@ -204,10 +200,10 @@ class _DosenScreenState extends State<DosenScreen> {
     required VoidCallback onTap,
   }) {
     return Hero(
-      tag: 'menu_button_$label', // Use the label to create a unique tag
+      tag: 'menu_button_$label', // Gunakan label untuk tag unik
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 113, 120, 158),
+          color: Color(0xFF00509E), // Warna biru menu
           borderRadius: BorderRadius.circular(10),
         ),
         child: Material(

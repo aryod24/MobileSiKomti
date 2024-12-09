@@ -76,8 +76,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            const Color.fromARGB(255, 113, 120, 158),
-            Color.fromARGB(255, 65, 84, 129),
+            Color(0xFF00509E),
+            Color(0xFF002366),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -156,8 +156,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            Color.fromARGB(255, 113, 120, 158),
-            Color.fromARGB(255, 65, 84, 129),
+            Color(0xFF00509E),
+            Color(0xFF002366),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -193,12 +193,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 4,
+      color: Color(0xFF002366), // Menambahkan warna biru header
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
           children: [
             IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back,
+                  color: Colors.white), // Menyesuaikan warna ikon dengan teks
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -209,6 +211,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: Colors
+                    .white, // Menyesuaikan warna teks agar kontras dengan latar belakang biru
                 fontFamily: 'Montserrat',
               ),
             ),
@@ -221,8 +225,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color(0xFFFEEFE5), // Set background color of the scaffold
+      backgroundColor: const Color.fromARGB(
+          255, 255, 255, 255), // Set background color of the scaffold
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),

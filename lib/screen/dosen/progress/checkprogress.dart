@@ -110,7 +110,10 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFFED7C3), Color(0xFFFEEFE5)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
@@ -122,6 +125,8 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
               ),
               elevation: 4,
               margin: const EdgeInsets.symmetric(horizontal: 20),
+              color:
+                  const Color(0xFF002366), // Mengatur warna card menjadi biru
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
@@ -132,7 +137,7 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                       onPressed: () {
                         Navigator.pop(context); // Tombol back
                       },
-                      color: Colors.black,
+                      color: Colors.white, // Mengubah warna ikon menjadi putih
                     ),
                     const Text(
                       'Detail Progress',
@@ -140,6 +145,8 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Montserrat',
+                        color:
+                            Colors.white, // Mengubah warna teks menjadi putih
                       ),
                     ),
                     const Spacer(),
@@ -147,7 +154,7 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 0),
             Expanded(
               child: FutureBuilder<List<dynamic>>(
                 future: progressList,
@@ -178,8 +185,8 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color.fromARGB(255, 113, 120, 158),
-                                    Color.fromARGB(255, 65, 84, 129),
+                                    Color(0xFF00509E),
+                                    Color(0xFF002366),
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -287,7 +294,7 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  color: const Color.fromARGB(255, 65, 84, 129),
+                  color: Color(0xFF00509E),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 20),

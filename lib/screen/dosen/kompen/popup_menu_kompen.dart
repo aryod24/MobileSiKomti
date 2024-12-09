@@ -11,6 +11,10 @@ class PopupMenuKompen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
+      icon: Icon(
+        Icons.more_vert, // Ikon titik tiga
+        color: Colors.white, // Mengubah warna ikon menjadi putih
+      ),
       onSelected: (value) {
         switch (value) {
           case 'detail':

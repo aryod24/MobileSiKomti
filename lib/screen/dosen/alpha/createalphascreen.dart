@@ -167,7 +167,7 @@ class _CreateAlphaScreenState extends State<CreateAlphaScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _createMahasiswaAlpha,
-                child: Text('Create'),
+                child: Text('Submit'),
               ),
             ],
           ),
