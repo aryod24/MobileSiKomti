@@ -10,10 +10,10 @@ class ProgressApiService {
       if (response.statusCode == 200) {
         return response.data['bukti'];
       } else {
-        throw Exception('Gagal mengambil data progress');
+        return []; // Return an empty list if the status code is not 200
       }
     } catch (e) {
-      throw Exception('Gagal mengambil data progress: $e');
+      return []; // Return an empty list if there's an error
     }
   }
 

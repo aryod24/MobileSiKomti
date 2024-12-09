@@ -10,10 +10,10 @@ class HistoryApiService {
       if (response.statusCode == 200) {
         return response.data['kompen'];
       } else {
-        throw Exception('Gagal mengambil data history kompen dosen');
+        return []; 
       }
     } catch (e) {
-      throw Exception('Gagal mengambil data history kompen dosen: $e');
+      return []; 
     }
   }
 

@@ -86,7 +86,7 @@ class _RequestMhsScreenState extends State<RequestMhsScreen> {
                     return Center(
                         child: Text('Terjadi kesalahan: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('Tidak ada data kompen'));
+                    return const Center(child: Text('Tidak ada data Request'));
                   } else {
                     List<dynamic> kompenData = snapshot.data!;
                     return ListView.builder(

@@ -132,7 +132,8 @@ class _DosenScreenState extends State<DosenScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255), // Biru seperti pada gambar
+        backgroundColor:
+            Color.fromARGB(255, 255, 255, 255), // Biru seperti pada gambar
         elevation: 0,
         title: Text(
           'SiKomti',

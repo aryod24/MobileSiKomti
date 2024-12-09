@@ -13,107 +13,157 @@ class EditKompenScreen extends StatefulWidget {
 class _EditKompenScreenState extends State<EditKompenScreen> {
   final KompenApiService apiService = KompenApiService();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   late TextEditingController _namaKompenController;
   late TextEditingController _deskripsiController;
-  late TextEditingController _jenisTugasController;
   late TextEditingController _quotaController;
   late TextEditingController _jamKompenController;
-  late TextEditingController _statusDibukaController;
   late TextEditingController _tanggalMulaiController;
   late TextEditingController _tanggalAkhirController;
   late TextEditingController _periodeKompenController;
-  late TextEditingController _idKompetensiController;
+
+  List<Map<String, dynamic>> jenisTugasList = [];
+  List<Map<String, dynamic>> kompetensiList = [];
+
+  String? selectedJenisTugas;
+  String? selectedKompetensi;
+  String? selectedStatusDibuka = 'Dibuka';
+  bool isSelesai = false;
 
   @override
   void initState() {
     super.initState();
-
-    // Inisialisasi controller
     _namaKompenController = TextEditingController();
     _deskripsiController = TextEditingController();
-    _jenisTugasController = TextEditingController();
     _quotaController = TextEditingController();
     _jamKompenController = TextEditingController();
-    _statusDibukaController = TextEditingController();
     _tanggalMulaiController = TextEditingController();
     _tanggalAkhirController = TextEditingController();
     _periodeKompenController = TextEditingController();
-    _idKompetensiController = TextEditingController();
 
-    // Memuat data
-    _loadKompenData();
+    // Load dropdown data first
+    _loadDropdownData().then((_) {
+      // Then load kompen data
+      _loadKompenData();
+    });
+  }
+
+  Future<void> _loadDropdownData() async {
+    try {
+      final response = await apiService.getJenisTugas();
+      final kompetensiResponse = await apiService.getKompetensi();
+
+      setState(() {
+        jenisTugasList =
+            List<Map<String, dynamic>>.from(response['data'] ?? []);
+        kompetensiList =
+            List<Map<String, dynamic>>.from(kompetensiResponse['data'] ?? []);
+      });
+    } catch (e) {
+      _showError('Gagal memuat data dropdown: $e');
+    }
   }
 
   Future<void> _loadKompenData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
       final data = await apiService.getKompenDetail(widget.uuidKompen);
+
       setState(() {
         _namaKompenController.text = data['nama_kompen'] ?? '';
         _deskripsiController.text = data['deskripsi'] ?? '';
-        _jenisTugasController.text = data['jenis_tugas']?.toString() ?? '';
         _quotaController.text = data['quota']?.toString() ?? '';
         _jamKompenController.text = data['jam_kompen']?.toString() ?? '';
-        _statusDibukaController.text = (data['status_dibuka'] == 1) ? '1' : '0';
+        selectedStatusDibuka =
+            (data['status_dibuka'] == 1) ? 'Dibuka' : 'Ditutup';
         _tanggalMulaiController.text = data['tanggal_mulai'] ?? '';
         _tanggalAkhirController.text = data['tanggal_akhir'] ?? '';
         _periodeKompenController.text = data['periode_kompen'] ?? '';
-        _idKompetensiController.text = data['id_kompetensi']?.toString() ?? '';
+
+        // Find matching jenis tugas from list
+        if (data['jenis_tugas'] != null) {
+          final jenisTugas = jenisTugasList.firstWhere(
+            (element) => element['id'] == data['jenis_tugas'],
+            orElse: () => {'id': null},
+          );
+          selectedJenisTugas = jenisTugas['id']?.toString();
+        }
+
+        if (data['id_kompetensi'] != null) {
+          final kompetensi = kompetensiList.firstWhere(
+            (element) => element['id'] == data['id_kompetensi'],
+            orElse: () => {'id': null},
+          );
+          selectedKompetensi = kompetensi['id']?.toString();
+        }
+
+        isSelesai = data['is_selesai'] == 1;
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gagal memuat data: $e')),
-      );
+      _showError('Gagal memuat data: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
   Future<void> _updateKompen() async {
     if (_formKey.currentState!.validate()) {
-      Map<String, dynamic> updatedData = {
-        'nama_kompen': _namaKompenController.text,
-        'deskripsi': _deskripsiController.text,
-        'jenis_tugas': _jenisTugasController.text,
-        'quota': int.tryParse(_quotaController.text) ?? 0,
-        'jam_kompen': int.tryParse(_jamKompenController.text) ?? 0,
-        'status_dibuka': _statusDibukaController.text == '1',
-        'tanggal_mulai': _tanggalMulaiController.text,
-        'tanggal_akhir': _tanggalAkhirController.text,
-        'periode_kompen': _periodeKompenController.text,
-        'id_kompetensi': _idKompetensiController.text,
-      };
+      setState(() {
+        _isLoading = true;
+      });
 
-      bool success =
-          await apiService.updateKompen(widget.uuidKompen, updatedData);
+      try {
+        Map<String, dynamic> updatedData = {
+          'nama_kompen': _namaKompenController.text,
+          'deskripsi': _deskripsiController.text,
+          'jenis_tugas': int.tryParse(selectedJenisTugas ?? ''),
+          'quota': int.tryParse(_quotaController.text) ?? 0,
+          'jam_kompen': int.tryParse(_jamKompenController.text) ?? 0,
+          'status_dibuka': selectedStatusDibuka == 'Dibuka',
+          'tanggal_mulai': _tanggalMulaiController.text,
+          'tanggal_akhir': _tanggalAkhirController.text,
+          'periode_kompen': _periodeKompenController.text,
+          'id_kompetensi': int.tryParse(selectedKompetensi ?? ''),
+          'is_selesai': isSelesai,
+        };
 
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Data kompen berhasil diperbarui')),
-        );
-        Navigator.pop(context);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal memperbarui data kompen')),
-        );
+        bool success =
+            await apiService.updateKompen(widget.uuidKompen, updatedData);
+
+        if (success) {
+          _showSuccess('Data kompen berhasil diperbarui');
+        } else {
+          _showError('Gagal memperbarui data kompen');
+        }
+      } catch (e) {
+        _showError('Error: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
 
-  @override
-  void dispose() {
-    _namaKompenController.dispose();
-    _deskripsiController.dispose();
-    _jenisTugasController.dispose();
-    _quotaController.dispose();
-    _jamKompenController.dispose();
-    _statusDibukaController.dispose();
-    _tanggalMulaiController.dispose();
-    _tanggalAkhirController.dispose();
-    _periodeKompenController.dispose();
-    _idKompetensiController.dispose();
-    super.dispose();
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
-  // Fungsi untuk membangun TextField
+  void _showSuccess(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+    Navigator.pop(context);
+  }
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -127,7 +177,7 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
         keyboardType: keyboardType,
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(), // Border yang sederhana
+          border: OutlineInputBorder(),
         ),
         validator: validator,
       ),
@@ -140,68 +190,125 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
       appBar: AppBar(
         title: Text('Edit Kompen'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              _buildTextField(
-                controller: _namaKompenController,
-                label: 'Nama Kompen',
-                validator: (value) =>
-                    value!.isEmpty ? 'Nama Kompen tidak boleh kosong' : null,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    _buildTextField(
+                      controller: _namaKompenController,
+                      label: 'Nama Kompen',
+                      validator: (value) => value!.isEmpty
+                          ? 'Nama Kompen tidak boleh kosong'
+                          : null,
+                    ),
+                    _buildTextField(
+                      controller: _deskripsiController,
+                      label: 'Deskripsi',
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: selectedJenisTugas,
+                      decoration: InputDecoration(
+                        labelText: 'Jenis Tugas',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: jenisTugasList.map((jenis) {
+                        return DropdownMenuItem(
+                          value: jenis['id'].toString(),
+                          child: Text(jenis['nama']),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedJenisTugas = value;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    DropdownButtonFormField<String>(
+                      value: selectedKompetensi,
+                      decoration: InputDecoration(
+                        labelText: 'Kompetensi',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: kompetensiList.map((kompetensi) {
+                        return DropdownMenuItem(
+                          value: kompetensi['id'].toString(),
+                          child: Text(kompetensi['nama']),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedKompetensi = value;
+                        });
+                      },
+                    ),
+                    _buildTextField(
+                      controller: _quotaController,
+                      label: 'Quota',
+                      keyboardType: TextInputType.number,
+                    ),
+                    _buildTextField(
+                      controller: _jamKompenController,
+                      label: 'Jam Kompen',
+                      keyboardType: TextInputType.number,
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: selectedStatusDibuka,
+                      decoration: InputDecoration(
+                        labelText: 'Status',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: ['Dibuka', 'Ditutup'].map((status) {
+                        return DropdownMenuItem(
+                          value: status,
+                          child: Text(status),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedStatusDibuka = value;
+                        });
+                      },
+                    ),
+                    _buildTextField(
+                      controller: _tanggalMulaiController,
+                      label: 'Tanggal Mulai (YYYY-MM-DD)',
+                    ),
+                    _buildTextField(
+                      controller: _tanggalAkhirController,
+                      label: 'Tanggal Akhir (YYYY-MM-DD)',
+                    ),
+                    _buildTextField(
+                      controller: _periodeKompenController,
+                      label: 'Periode Kompen',
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Is Selesai'),
+                        Switch(
+                          value: isSelesai,
+                          onChanged: (value) {
+                            setState(() {
+                              isSelesai = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _updateKompen,
+                      child: Text('Update'),
+                    ),
+                  ],
+                ),
               ),
-              _buildTextField(
-                controller: _deskripsiController,
-                label: 'Deskripsi',
-                validator: (value) =>
-                    value!.isEmpty ? 'Deskripsi tidak boleh kosong' : null,
-              ),
-              _buildTextField(
-                controller: _jenisTugasController,
-                label: 'Jenis Tugas',
-              ),
-              _buildTextField(
-                controller: _quotaController,
-                label: 'Quota',
-                keyboardType: TextInputType.number,
-              ),
-              _buildTextField(
-                controller: _jamKompenController,
-                label: 'Jam Kompen',
-                keyboardType: TextInputType.number,
-              ),
-              _buildTextField(
-                controller: _statusDibukaController,
-                label: 'Status Dibuka (1=Ya, 0=Tidak)',
-                keyboardType: TextInputType.number,
-              ),
-              _buildTextField(
-                controller: _tanggalMulaiController,
-                label: 'Tanggal Mulai',
-              ),
-              _buildTextField(
-                controller: _tanggalAkhirController,
-                label: 'Tanggal Akhir',
-              ),
-              _buildTextField(
-                controller: _periodeKompenController,
-                label: 'Periode Kompen',
-              ),
-              _buildTextField(
-                controller: _idKompetensiController,
-                label: 'ID Kompetensi',
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _updateKompen,
-                child: Text('Update'),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

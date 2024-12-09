@@ -92,6 +92,16 @@ class KompenApiService {
     }
   }
 
+  Future<Map<String, dynamic>> getJenisTugas() async {
+    final response = await dio.get(baseUrl + "jenis-tugas");
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> getKompetensi() async {
+    final response = await dio.get(baseUrl + "kompetensi");
+    return response.data;
+  }
+
   Future<Map<String, dynamic>> deleteKompen(String uuid) async {
     try {
       final response = await dio.delete(baseUrl + "kompen/$uuid");
