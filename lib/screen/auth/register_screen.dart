@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import '../../services/register_service.dart';
 import 'login_screen.dart'; // Ensure this import is present
 
@@ -15,12 +16,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmationController =
       TextEditingController();
-  final TextEditingController _levelIdController = TextEditingController();
 
+  List<Map<String, dynamic>> levelList = [];
+  String? selectedLevelId; // This can be nullable
   bool _isLoading = false;
   final RegisterService _registerService = RegisterService();
 
+  @override
+  void initState() {
+    super.initState();
+    fetchLevelData();
+  }
+
+  Future<void> fetchLevelData() async {
+    try {
+      final response = await Dio().get('http://192.168.1.14:8000/api/levels');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        setState(() {
+          levelList =
+              data.where((level) => level['level_id'] != 1).map((level) {
+            return {
+              'id': level['level_id']?.toString() ??
+                  '', // Convert to string and handle null
+              'kode': level['level_kode'] ?? '', // Handle null
+              'nama': level['level_nama'] ?? '', // Handle null
+            };
+          }).toList();
+        });
+      }
+    } catch (e) {
+      print('Error fetching level data: $e');
+    }
+  }
+
   void _register() async {
+    if (selectedLevelId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select a level')),
+      );
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
@@ -33,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ni: _niController.text,
         password: _passwordController.text,
         passwordConfirmation: _passwordConfirmationController.text,
-        levelId: _levelIdController.text,
+        levelId: selectedLevelId!, // Ensure non-null value here
         context: context,
       );
 
@@ -61,9 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(response['message'] ??
-                  'Registration failed. Please try again.')),
+          SnackBar(content: Text(response['message'] ?? 'Registration failed')),
         );
       }
     } catch (e) {
@@ -78,25 +113,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
-  void dispose() {
-    _usernameController.dispose();
-    _namaController.dispose();
-    _jurusanController.dispose();
-    _niController.dispose();
-    _passwordController.dispose();
-    _passwordConfirmationController.dispose();
-    _levelIdController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset:
-          true, // Memastikan layar menyesuaikan dengan keyboard
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(
-          color: Colors.white, // Mengganti background menjadi putih
+          color: Colors.white,
           child: Stack(
             children: <Widget>[
               Center(
@@ -106,7 +128,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        // LOGO
                         Image.asset(
                           'assets/image/logonew.png',
                           width: 140,
@@ -119,11 +140,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
-                            color: Colors.black, // Warna teks menjadi hitam
+                            color: Colors.black,
                           ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 30),
+
+                        DropdownButtonFormField<String>(
+                          value: selectedLevelId,
+                          decoration: InputDecoration(
+                            labelText: 'Level',
+                            labelStyle: const TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                          items:
+                              levelList.map<DropdownMenuItem<String>>((level) {
+                            return DropdownMenuItem<String>(
+                              value: level['id'],
+                              child:
+                                  Text('${level['kode']} - ${level['nama']}'),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedLevelId = value;
+                            });
+                          },
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Other form fields
                         _buildTextField(_usernameController, 'Username'),
                         const SizedBox(height: 20),
                         _buildTextField(_namaController, 'Nama'),
@@ -138,9 +192,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _buildTextField(
                             _passwordConfirmationController, 'Confirm Password',
                             obscureText: true),
-                        const SizedBox(height: 20),
-                        _buildTextField(_levelIdController, 'Level ID'),
                         const SizedBox(height: 30),
+
                         _isLoading
                             ? const Center(child: CircularProgressIndicator())
                             : _buildRegisterButton(context),
@@ -182,9 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       width: 250,
       height: 60,
       decoration: BoxDecoration(
-        color: Color(0xFF002366), // Mengubah warna tombol
-        borderRadius: BorderRadius.circular(20),
-      ),
+          color: Color(0xFF002366), borderRadius: BorderRadius.circular(20)),
       child: ElevatedButton(
         onPressed: !_isLoading ? _register : null,
         style: ElevatedButton.styleFrom(
@@ -217,7 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         style: TextStyle(
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.bold,
-          color: Colors.black, // Warna teks menjadi hitam
+          color: Colors.black,
         ),
       ),
     );
