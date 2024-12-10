@@ -10,10 +10,10 @@ class HistoryApiService {
       if (response.statusCode == 200) {
         return response.data['kompen'];
       } else {
-        return []; 
+        return [];
       }
     } catch (e) {
-      return []; 
+      return [];
     }
   }
 
