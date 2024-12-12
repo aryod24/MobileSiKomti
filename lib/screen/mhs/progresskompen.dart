@@ -42,7 +42,10 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: SingleChildScrollView(
@@ -57,9 +60,7 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        color: showRequests
-                            ? Color(0xFF00509E)
-                            : Colors.white,
+                        color: showRequests ? Color(0xFF00509E) : Colors.white,
                         elevation: 4,
                         margin: const EdgeInsets.all(8),
                         child: Padding(
@@ -84,9 +85,7 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        color: !showRequests
-                            ? Color(0xFF00509E)
-                            : Colors.white,
+                        color: !showRequests ? Color(0xFF00509E) : Colors.white,
                         elevation: 4,
                         margin: const EdgeInsets.all(8),
                         child: Padding(
@@ -115,7 +114,8 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                   elevation: 4,
                   color: const Color(0xFF002366), // Warna card biru
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Row(
                       children: [
                         Text(
@@ -211,7 +211,7 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                                                     const SizedBox(width: 5),
                                                     Expanded(
                                                       child: Text(
-                                                        'UUID Kompen: ${request['UUID_Kompen']}',
+                                                        'Tanggal Mulai: ${(request['kompen_details']['tanggal_mulai']?.toString() ?? 'Tidak ada nama kompen')}',
                                                         style: const TextStyle(
                                                           fontFamily:
                                                               'Montserrat',
@@ -220,7 +220,7 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                                                       ),
                                                     ),
                                                   ],
-                                                ),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -269,8 +269,7 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                                         'Status: ${request['status_Acc'] == 1 ? 'Diterima' : 'Ditolak'}',
                                         style: const TextStyle(
                                           fontFamily: 'Montserrat',
-                                          color:
-                                              Color(0xFF00509E),
+                                          color: Color(0xFF00509E),
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

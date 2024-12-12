@@ -23,10 +23,10 @@ class HistoryApiService {
       if (response.statusCode == 200) {
         return response.data['progress'];
       } else {
-        throw Exception('Gagal mengambil data history kompen mahasiswa');
+        return []; // Return an empty list if the response status code is not 200
       }
     } catch (e) {
-      throw Exception('Gagal mengambil data history kompen mahasiswa: $e');
+      return []; // Return an empty list if an exception occurs
     }
   }
 }
