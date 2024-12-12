@@ -83,7 +83,14 @@ class _MahasiswaScreenState extends State<MahasiswaScreen> {
             Widget bodyContent;
             switch (_selectedIndex) {
               case 0:
-                bodyContent = HomepageContent(userData: userData);
+                bodyContent = HomepageContent(
+                  userData: userData,
+                  onMenuTap: (int index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                );
                 break;
               case 1:
                 bodyContent = ListKompenScreen();
@@ -112,25 +119,26 @@ class _MahasiswaScreenState extends State<MahasiswaScreen> {
 
 class HomepageContent extends StatelessWidget {
   final Map<String, String> userData;
+  final ValueChanged<int> onMenuTap;
 
-  HomepageContent({required this.userData});
+  HomepageContent({required this.userData, required this.onMenuTap});
 
   Widget _buildMenuButton({
     required IconData icon,
     required String label,
-    required VoidCallback onTap,
+    required int index,
   }) {
     return Hero(
-      tag: 'menu_button_$label', // Gunakan label untuk tag unik
+      tag: 'menu_button_$label',
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF00509E), // Warna biru menu
+          color: Color(0xFF00509E),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onTap,
+            onTap: () => onMenuTap(index),
             borderRadius: BorderRadius.circular(10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +171,7 @@ class HomepageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -177,14 +185,12 @@ class HomepageContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 0),
             ProfilMahasiswa(
               nama: userData['nama'] ?? 'Nama tidak ditemukan',
               ni: userData['ni'] ?? 'NI tidak ditemukan',
               jurusan: userData['jurusan'] ?? 'Jurusan tidak ditemukan',
             ),
-            SizedBox(height: 20),
-            // Button section
+            SizedBox(height: 5),
             GridView.count(
               shrinkWrap: true,
               crossAxisCount: 2,
@@ -194,30 +200,22 @@ class HomepageContent extends StatelessWidget {
                 _buildMenuButton(
                   icon: Icons.list_alt,
                   label: 'List\nPekerjaan',
-                  onTap: () {
-                    // Placeholder for navigation or action
-                  },
+                  index: 1,
                 ),
                 _buildMenuButton(
                   icon: Icons.assignment_turned_in,
                   label: 'Pengajuan\nKompen',
-                  onTap: () {
-                    // Placeholder for navigation or action
-                  },
+                  index: 2,
                 ),
                 _buildMenuButton(
                   icon: Icons.access_time,
                   label: 'Progres\nKompen',
-                  onTap: () {
-                    // Placeholder for navigation or action
-                  },
+                  index: 2,
                 ),
                 _buildMenuButton(
                   icon: Icons.assignment,
                   label: 'Hasil\nKompen',
-                  onTap: () {
-                    // Placeholder for navigation or action
-                  },
+                  index: 3,
                 ),
               ],
             ),

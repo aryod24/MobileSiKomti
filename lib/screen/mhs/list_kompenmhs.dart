@@ -147,7 +147,10 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
@@ -300,6 +303,31 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                                                         ),
                                                       ],
                                                     ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      children: [
+                                                        const Icon(
+                                                            Icons
+                                                                .supervised_user_circle,
+                                                            color:
+                                                                Colors.white70),
+                                                        const SizedBox(
+                                                            width: 5),
+                                                        Expanded(
+                                                          child: Text(
+                                                            kompen['nama'] ??
+                                                                'Deskripsi tidak tersedia',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily:
+                                                                  'Montserrat',
+                                                              color: Colors
+                                                                  .white70,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -390,7 +418,8 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                                             : () => _showRequestDialog(
                                                 kompen['UUID_Kompen']),
                                         icon: const Icon(Icons.flag,
-                                            color: Color.fromARGB(188, 0, 79, 158)),
+                                            color: Color.fromARGB(
+                                                188, 0, 79, 158)),
                                       ),
                                     ],
                                   ),

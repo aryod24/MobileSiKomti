@@ -47,7 +47,7 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 0),
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

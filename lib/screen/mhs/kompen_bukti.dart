@@ -54,7 +54,8 @@ class _KompenBuktiState extends State<KompenBukti> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Montserrat',
-                    color: Colors.white, // Teks putih agar kontras dengan warna biru
+                    color: Colors
+                        .white, // Teks putih agar kontras dengan warna biru
                   ),
                 ),
               ],
@@ -188,7 +189,7 @@ class _KompenBuktiState extends State<KompenBukti> {
                                   const SizedBox(width: 5),
                                   Flexible(
                                     child: Text(
-                                      'Bukti Kompen: ${progress['bukti_kompen'] ?? 'Tidak ada bukti'}',
+                                      'Bukti Kompen: ${progress['bukti_kompen'] ?? 'Belum ada bukti'}',
                                       style: const TextStyle(
                                         fontFamily: 'Montserrat',
                                         color: Colors.white70,
