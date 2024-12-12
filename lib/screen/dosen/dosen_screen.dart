@@ -39,12 +39,12 @@ class _DosenScreenState extends State<DosenScreen> {
   Widget _buildHomePage(Map<String, String> userData) {
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
         color: Colors.white, // Latar belakang putih
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 1),
+            SizedBox(height: 0),
             ProfilDosen(
               nama: userData['nama'] ?? 'Nama tidak ditemukan',
               ni: userData['ni'] ?? 'NI tidak ditemukan',

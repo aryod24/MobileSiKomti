@@ -53,7 +53,7 @@ class _DataScreenState extends State<DataScreen> {
       children: [
         tableCell(mahasiswa.ni, height: 40),
         tableCell(mahasiswa.nama ?? 'Tidak Ada', height: 40),
-        tableCell(mahasiswa.semester, height: 40),
+        tableCell(mahasiswa.semester.toString(), height: 40),
         tableCell(mahasiswa.jamAlpha.toString(), height: 40),
         tableCell(mahasiswa.jamKompen?.toString() ?? 'N/A', height: 40),
         Container(
@@ -80,7 +80,9 @@ class _DataScreenState extends State<DataScreen> {
                 value: 'Detail',
                 child: Row(
                   children: [
-                    Icon(Icons.visibility, color: const Color.fromARGB(255, 6, 104, 185), size: 20), // Icon for Detail
+                    Icon(Icons.visibility,
+                        color: const Color.fromARGB(255, 6, 104, 185),
+                        size: 20), // Icon for Detail
                     SizedBox(width: 10),
                     Text('Detail'),
                   ],
@@ -90,7 +92,8 @@ class _DataScreenState extends State<DataScreen> {
                 value: 'Edit',
                 child: Row(
                   children: [
-                    Icon(Icons.edit, color: Colors.orange, size: 20), // Icon for Edit
+                    Icon(Icons.edit,
+                        color: Colors.orange, size: 20), // Icon for Edit
                     SizedBox(width: 10),
                     Text('Edit'),
                   ],
@@ -100,7 +103,8 @@ class _DataScreenState extends State<DataScreen> {
                 value: 'Delete',
                 child: Row(
                   children: [
-                    Icon(Icons.delete, color: Colors.red, size: 20), // Icon for Delete
+                    Icon(Icons.delete,
+                        color: Colors.red, size: 20), // Icon for Delete
                     SizedBox(width: 10),
                     Text('Delete'),
                   ],
@@ -134,7 +138,8 @@ class _DataScreenState extends State<DataScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _detailRow(Icons.person, 'NIM', item.ni),
-              _detailRow(Icons.account_circle, 'Nama', item.nama ?? 'Tidak Ada'),
+              _detailRow(
+                  Icons.account_circle, 'Nama', item.nama ?? 'Tidak Ada'),
               _detailRow(Icons.school, 'Semester', item.semester.toString()),
               _detailRow(Icons.alarm, 'Jam Alpha', item.jamAlpha.toString()),
               _detailRow(
@@ -255,7 +260,10 @@ class _DataScreenState extends State<DataScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
