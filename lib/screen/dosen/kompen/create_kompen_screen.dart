@@ -12,8 +12,6 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _quotaController = TextEditingController();
   final TextEditingController _jamKompenController = TextEditingController();
-  final TextEditingController _periodeKompenController =
-      TextEditingController();
   final TextEditingController _tanggalMulaiController = TextEditingController();
   final TextEditingController _tanggalAkhirController = TextEditingController();
 
@@ -32,23 +30,52 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
     fetchDropdownData();
   }
 
+  Future<void> _selectDate(TextEditingController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != DateTime.now()) {
+      controller.text =
+          "${picked.toLocal()}".split(' ')[0]; // Format date as YYYY-MM-DD
+    }
+  }
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
+    bool isDateField = false,
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(),
-        ),
-        validator: validator,
-      ),
+      child: isDateField
+          ? GestureDetector(
+              onTap: () => _selectDate(controller), // Trigger date picker
+              child: AbsorbPointer(
+                // Prevent keyboard from appearing
+                child: TextFormField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    labelText: label,
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: validator,
+                ),
+              ),
+            )
+          : TextFormField(
+              controller: controller,
+              keyboardType: keyboardType,
+              decoration: InputDecoration(
+                labelText: label,
+                border: OutlineInputBorder(),
+              ),
+              validator: validator,
+            ),
     );
   }
 
@@ -97,7 +124,6 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
           'jenis_tugas': int.tryParse(selectedJenisTugas ?? ''),
           'quota': int.tryParse(_quotaController.text),
           'jam_kompen': int.tryParse(_jamKompenController.text),
-          'periode_kompen': _periodeKompenController.text,
           'status_dibuka': selectedStatusDibuka == 'Dibuka',
           'tanggal_mulai': _tanggalMulaiController.text,
           'tanggal_akhir': _tanggalAkhirController.text,
@@ -168,35 +194,25 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
           child: Column(
             children: [
               _buildTextField(
-                controller: _namaKompenController,
-                label: 'Nama Kompen',
-              ),
+                  controller: _namaKompenController, label: 'Nama Kompen'),
               _buildTextField(
-                controller: _deskripsiController,
-                label: 'Deskripsi',
-              ),
+                  controller: _deskripsiController, label: 'Deskripsi'),
               _buildTextField(
-                controller: _quotaController,
-                label: 'Quota',
-                keyboardType: TextInputType.number,
-              ),
+                  controller: _quotaController,
+                  label: 'Quota',
+                  keyboardType: TextInputType.number),
               _buildTextField(
-                controller: _jamKompenController,
-                label: 'Jam Kompen',
-                keyboardType: TextInputType.number,
-              ),
+                  controller: _jamKompenController,
+                  label: 'Jam Kompen',
+                  keyboardType: TextInputType.number),
               _buildTextField(
-                controller: _periodeKompenController,
-                label: 'Periode Kompen',
-              ),
+                  controller: _tanggalMulaiController,
+                  label: 'Tanggal Mulai',
+                  isDateField: true), // Date field
               _buildTextField(
-                controller: _tanggalMulaiController,
-                label: 'Tanggal Mulai (YYYY-MM-DD)',
-              ),
-              _buildTextField(
-                controller: _tanggalAkhirController,
-                label: 'Tanggal Akhir (YYYY-MM-DD)',
-              ),
+                  controller: _tanggalAkhirController,
+                  label: 'Tanggal Akhir',
+                  isDateField: true), // Date field
               SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: selectedJenisTugas,

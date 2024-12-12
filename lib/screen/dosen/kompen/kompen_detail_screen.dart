@@ -3,9 +3,7 @@ import '../../../services/KompenApiService.dart';
 
 class KompenDetailScreen extends StatefulWidget {
   final String uuidKompen;
-
   KompenDetailScreen({required this.uuidKompen});
-
   @override
   _KompenDetailScreenState createState() => _KompenDetailScreenState();
 }
@@ -13,11 +11,29 @@ class KompenDetailScreen extends StatefulWidget {
 class _KompenDetailScreenState extends State<KompenDetailScreen> {
   late Future<Map<String, dynamic>> kompenDetail;
   final KompenApiService apiService = KompenApiService();
+  List<Map<String, dynamic>> jenisTugasList = [];
+  List<Map<String, dynamic>> kompetensiList = [];
 
   @override
   void initState() {
     super.initState();
     kompenDetail = apiService.getKompenDetail(widget.uuidKompen);
+    _loadDropdownData();
+  }
+
+  Future<void> _loadDropdownData() async {
+    try {
+      final jenisTugasResponse = await apiService.getJenisTugas();
+      final kompetensiResponse = await apiService.getKompetensi();
+      setState(() {
+        jenisTugasList =
+            List<Map<String, dynamic>>.from(jenisTugasResponse['data'] ?? []);
+        kompetensiList =
+            List<Map<String, dynamic>>.from(kompetensiResponse['data'] ?? []);
+      });
+    } catch (e) {
+      print('Error loading dropdown data: $e');
+    }
   }
 
   @override
@@ -50,7 +66,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
                 child: Column(
                   children: [
                     buildHeaderCard(context),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     buildDetailCard(context, kompen),
                   ],
                 ),
@@ -68,8 +84,8 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      elevation: 4,
-      color: const Color(0xFF002366), // Mengatur warna card menjadi biru
+      elevation: 2,
+      color: const Color(0xFF002366),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
@@ -79,16 +95,16 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              color: Colors.white, // Mengubah warna ikon menjadi putih
+              color: Colors.white,
             ),
             const SizedBox(width: 8),
             const Text(
               'Detail Kompen',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Montserrat',
-                color: Colors.white, // Mengubah warna teks menjadi putih
+                color: Colors.white,
               ),
             ),
           ],
@@ -105,7 +121,11 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
         'title': 'UUID Kompen',
         'subtitle': widget.uuidKompen
       },
-      {'icon': Icons.person, 'title': 'User ID', 'subtitle': kompen['user_id']},
+      {
+        'icon': Icons.person,
+        'title': 'Pembuat Tugas',
+        'subtitle': kompen['nama']
+      },
       {
         'icon': Icons.accessibility,
         'title': 'Level ID',
@@ -150,7 +170,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
       {
         'icon': Icons.check,
         'title': 'Is Selesai',
-        'subtitle': kompen['is_selesai']
+        'subtitle': _getIsSelesai(kompen['Is_Selesai'])
       },
       {
         'icon': Icons.assignment,
@@ -165,13 +185,10 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
     ];
 
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFF00509E),
-            Color(0xFF002366),
-          ],
+          colors: [Color(0xFF00509E), Color(0xFF002366)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -182,21 +199,38 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: details.map((detail) {
-            return ListTile(
-              leading: Icon(detail['icon'], color: Colors.white),
-              title: Text(
-                detail['title'],
-                style: const TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Colors.white,
-                ),
-              ),
-              subtitle: Text(
-                detail['subtitle'].toString(),
-                style: const TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Colors.white,
-                ),
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(detail['icon'], color: Colors.white, size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          detail['title'],
+                          style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          detail['subtitle'].toString(),
+                          style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             );
           }).toList(),
@@ -213,25 +247,18 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
     } else if (levelId == 4) {
       return 'Tendik';
     } else {
-      return 'null'; // Default for other user_ids
+      return 'Tidak tersedia';
     }
   }
 
-  // Get Jenis Tugas description based on jenis_tugas code
   String _getJenisTugas(dynamic jenisTugas) {
-    switch (jenisTugas) {
-      case 1:
-        return 'Penelitian';
-      case 2:
-        return 'Pengabdian';
-      case 3:
-        return 'Teknis';
-      default:
-        return 'Tidak tersedia';
-    }
+    var jenisTugasItem = jenisTugasList.firstWhere(
+      (element) => element['id'] == jenisTugas,
+      orElse: () => {'nama': 'Tidak tersedia'},
+    );
+    return jenisTugasItem['nama'];
   }
 
-  // Get Status Dibuka description based on status_dibuka code
   String _getStatusDibuka(dynamic statusDibuka) {
     return (statusDibuka == 1)
         ? 'Dibuka'
@@ -240,31 +267,15 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
             : 'Tidak tersedia';
   }
 
-  // Get ID Kompetensi description based on id_kompetensi code
   String _getIdKompetensi(dynamic idKompetensi) {
-    switch (idKompetensi) {
-      case 1:
-        return 'Analisis Data';
-      case 2:
-        return 'Keterampilan Komunikasi';
-      case 3:
-        return 'Digital Marketing';
-      case 4:
-        return 'UI/UX Design';
-      case 5:
-        return 'Sistem Operasi';
-      case 6:
-        return 'Analisis dan Desain Sistem';
-      case 7:
-        return 'Jaringan Komputer';
-      case 8:
-        return 'Pengolahan Data';
-      case 9:
-        return 'Pengembangan Web';
-      case 10:
-        return 'Manajemen Database';
-      default:
-        return 'Tidak tersedia';
-    }
+    var kompetensiItem = kompetensiList.firstWhere(
+      (element) => element['id'] == idKompetensi,
+      orElse: () => {'nama': 'Tidak tersedia'},
+    );
+    return kompetensiItem['nama'];
+  }
+
+  String _getIsSelesai(dynamic isSelesai) {
+    return (isSelesai == 1) ? 'Sudah' : 'Belum';
   }
 }

@@ -21,7 +21,6 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
   late TextEditingController _jamKompenController;
   late TextEditingController _tanggalMulaiController;
   late TextEditingController _tanggalAkhirController;
-  late TextEditingController _periodeKompenController;
 
   List<Map<String, dynamic>> jenisTugasList = [];
   List<Map<String, dynamic>> kompetensiList = [];
@@ -40,7 +39,6 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
     _jamKompenController = TextEditingController();
     _tanggalMulaiController = TextEditingController();
     _tanggalAkhirController = TextEditingController();
-    _periodeKompenController = TextEditingController();
 
     // Load dropdown data first
     _loadDropdownData().then((_) {
@@ -82,7 +80,6 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
             (data['status_dibuka'] == 1) ? 'Dibuka' : 'Ditutup';
         _tanggalMulaiController.text = data['tanggal_mulai'] ?? '';
         _tanggalAkhirController.text = data['tanggal_akhir'] ?? '';
-        _periodeKompenController.text = data['periode_kompen'] ?? '';
 
         // Find matching jenis tugas from list
         if (data['jenis_tugas'] != null) {
@@ -128,7 +125,6 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
           'status_dibuka': selectedStatusDibuka == 'Dibuka',
           'tanggal_mulai': _tanggalMulaiController.text,
           'tanggal_akhir': _tanggalAkhirController.text,
-          'periode_kompen': _periodeKompenController.text,
           'id_kompetensi': int.tryParse(selectedKompetensi ?? ''),
           'is_selesai': isSelesai,
         };
@@ -282,14 +278,10 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
                       controller: _tanggalAkhirController,
                       label: 'Tanggal Akhir (YYYY-MM-DD)',
                     ),
-                    _buildTextField(
-                      controller: _periodeKompenController,
-                      label: 'Periode Kompen',
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Is Selesai'),
+                        Text('Status Selesai'),
                         Switch(
                           value: isSelesai,
                           onChanged: (value) {
