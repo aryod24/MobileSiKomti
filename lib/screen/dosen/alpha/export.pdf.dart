@@ -196,7 +196,7 @@ Future<Uint8List> generatePDF(
                     pw.Container(
                       alignment: pw.Alignment.center,
                       padding: pw.EdgeInsets.all(4),
-                      child: pw.Text(item['semester']),
+                      child: pw.Text(item['semester'].toString()),
                     ),
                     pw.Container(
                       alignment: pw.Alignment.center,

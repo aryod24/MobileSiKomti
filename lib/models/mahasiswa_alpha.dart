@@ -3,7 +3,7 @@ class MahasiswaAlpha {
   String ni;
   String? nama; // Add the nama field
   int jamAlpha;
-  String semester;
+  int semester;
   int? jamKompen;
 
   MahasiswaAlpha({

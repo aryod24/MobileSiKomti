@@ -28,7 +28,7 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
     _jamAlphaController =
         TextEditingController(text: widget.mahasiswaAlpha.jamAlpha.toString());
     _semesterController =
-        TextEditingController(text: widget.mahasiswaAlpha.semester);
+        TextEditingController(text: widget.mahasiswaAlpha.semester.toString());
     _jamKompenController = TextEditingController(
         text: widget.mahasiswaAlpha.jamKompen?.toString() ?? '');
   }
@@ -71,7 +71,7 @@ class _EditMahasiswaAlphaScreenState extends State<EditMahasiswaAlphaScreen> {
         ni: _niController.text,
         nama: _namaController.text,
         jamAlpha: int.parse(_jamAlphaController.text),
-        semester: _semesterController.text,
+        semester: int.parse(_semesterController.text),
         jamKompen: _jamKompenController.text.isNotEmpty
             ? int.parse(_jamKompenController.text)
             : null,

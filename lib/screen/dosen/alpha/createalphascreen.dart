@@ -53,7 +53,7 @@ class _CreateAlphaScreenState extends State<CreateAlphaScreen> {
         ni: _niController.text,
         nama: _namaController.text,
         jamAlpha: int.parse(_jamAlphaController.text),
-        semester: _semesterController.text,
+        semester: int.parse(_semesterController.text),
         jamKompen: _jamKompenController.text.isNotEmpty
             ? int.parse(_jamKompenController.text)
             : null,
