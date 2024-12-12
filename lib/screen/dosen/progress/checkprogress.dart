@@ -124,9 +124,8 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 4,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              color:
-                  const Color(0xFF002366), // Mengatur warna card menjadi biru
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              color: const Color(0xFF002366),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
@@ -135,9 +134,9 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
                       onPressed: () {
-                        Navigator.pop(context); // Tombol back
+                        Navigator.pop(context);
                       },
-                      color: Colors.white, // Mengubah warna ikon menjadi putih
+                      color: Colors.white,
                     ),
                     const Text(
                       'Detail Progress',
@@ -145,8 +144,7 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Montserrat',
-                        color:
-                            Colors.white, // Mengubah warna teks menjadi putih
+                        color: Colors.white,
                       ),
                     ),
                     const Spacer(),
@@ -172,18 +170,20 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                     return ListView.builder(
                       itemCount: progressData.length,
                       itemBuilder: (context, index) {
-                        var progress = progressData[index];
+                        var currentProgress =
+                            progressData[index]; // Rename to avoid confusion
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 1),
                           child: Card(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Container(
                               padding: const EdgeInsets.all(16.0),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
                                   colors: [
                                     Color(0xFF00509E),
                                     Color(0xFF002366),
@@ -191,7 +191,9 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,32 +203,62 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'ID: ${progress['id_progres']}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                            color: Colors.white,
-                                            fontFamily: 'Montserrat',
-                                          ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.person,
+                                              color: Colors.white70,
+                                              size: 18,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              'NIM: ${currentProgress['ni']}',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.white,
+                                                fontFamily: 'Montserrat',
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         const SizedBox(height: 5),
-                                        Text(
-                                          'Nama: ${progress['nama']}',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white70,
-                                            fontFamily: 'Montserrat',
-                                          ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.account_circle,
+                                              color: Colors.white70,
+                                              size: 18,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              'Nama: ${currentProgress['nama']}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white70,
+                                                fontFamily: 'Montserrat',
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         const SizedBox(height: 5),
-                                        Text(
-                                          'Status: ${progress['status_acc'] == 1 ? 'Diterima' : 'Ditolak'}',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white70,
-                                            fontFamily: 'Montserrat',
-                                          ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.check_circle,
+                                              color: Colors.white70,
+                                              size: 18,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              'Status: ${currentProgress['status_acc'] == 1 ? "Diterima" : "Ditolak"}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white70,
+                                                fontFamily: 'Montserrat',
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -235,19 +267,21 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                                     onSelected: (value) {
                                       if (value == 'accept') {
                                         _updateProgressStatus(
-                                            progress['id_progres'], 1);
+                                            currentProgress['id_progres'], 1);
                                       } else if (value == 'reject') {
                                         _updateProgressStatus(
-                                            progress['id_progres'], 0);
+                                            currentProgress['id_progres'], 0);
                                       } else if (value == 'delete') {
-                                        _deleteProgress(progress['id_progres']);
+                                        _deleteProgress(
+                                            currentProgress['id_progres']);
                                       } else if (value == 'detail') {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 DetailBuktiScreen(
-                                                    progress: progress),
+                                              progress: currentProgress,
+                                            ),
                                           ),
                                         );
                                       }
@@ -294,10 +328,9 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  color: Color(0xFF00509E),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
+                  color: const Color(0xFF00509E),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                     child: Center(
                       child: Text(
                         'Selesaikan Kompen',

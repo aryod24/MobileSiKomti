@@ -76,7 +76,10 @@ class PengajuanScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors:[Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)], // Gradient colors
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ], // Gradient colors
           ),
         ),
         child: Padding(
@@ -84,38 +87,42 @@ class PengajuanScreen extends StatelessWidget {
           child: Column(
             children: [
               // Card with Back Button
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              color: const Color(0xFF002366), // Mengatur warna card menjadi biru
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context); // Tombol back
-                      },
-                      color: Colors.white, // Mengubah warna ikon menjadi putih
-                    ),
-                    const Text(
-                      'Detail Pengajuan',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                        color: Colors.white, // Mengubah warna teks menjadi putih
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                elevation: 4,
+                margin: const EdgeInsets.symmetric(horizontal: 7),
+                color:
+                    const Color(0xFF002366), // Mengatur warna card menjadi biru
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context); // Tombol back
+                        },
+                        color:
+                            Colors.white, // Mengubah warna ikon menjadi putih
                       ),
-                    ),
-                    const Spacer(),
-                  ],
+                      const Text(
+                        'Detail Pengajuan',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                          color:
+                              Colors.white, // Mengubah warna teks menjadi putih
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
                 ),
               ),
-            ),
               SizedBox(height: 10), // Space between card and data table
               Expanded(
                 child: FutureBuilder<Map<String, dynamic>>(
@@ -133,7 +140,7 @@ class PengajuanScreen extends StatelessWidget {
                       return LayoutBuilder(
                         builder: (context, constraints) {
                           double columnWidth = constraints.maxWidth /
-                              5; // Dynamically adjust column width
+                              4; // Dynamically adjust column width
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Table(
@@ -146,7 +153,6 @@ class PengajuanScreen extends StatelessWidget {
                                 1: FixedColumnWidth(columnWidth),
                                 2: FixedColumnWidth(columnWidth),
                                 3: FixedColumnWidth(columnWidth),
-                                4: FixedColumnWidth(columnWidth),
                               },
                               children: [
                                 // Header with rounded corners
@@ -164,8 +170,7 @@ class PengajuanScreen extends StatelessWidget {
                                     ),
                                   ),
                                   children: [
-                                    tableCell('ID', isHeader: true),
-                                    tableCell('NI', isHeader: true),
+                                    tableCell('NIM', isHeader: true),
                                     tableCell('Nama', isHeader: true),
                                     tableCell('Status', isHeader: true),
                                     tableCell('Aksi', isHeader: true),
@@ -178,9 +183,6 @@ class PengajuanScreen extends StatelessWidget {
                                       color: const Color(0xFFE7E9FC),
                                     ),
                                     children: [
-                                      tableCell(item['id_MahasiswaKompen']
-                                              ?.toString() ??
-                                          '-'),
                                       tableCell(item['ni']?.toString() ?? '-'),
                                       tableCell(
                                           item['nama'] ?? 'Tidak Tersedia'),

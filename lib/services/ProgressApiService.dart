@@ -65,10 +65,10 @@ class ProgressApiService {
       if (response.statusCode == 200) {
         return response.data['data'];
       } else {
-        throw Exception('Gagal mengambil data request kompen');
+        return []; // Return an empty list if the response status code is not 200
       }
     } catch (e) {
-      throw Exception('Gagal mengambil data request kompen: $e');
+      return []; // Return an empty list if an exception occurs
     }
   }
 
@@ -78,10 +78,10 @@ class ProgressApiService {
       if (response.statusCode == 200) {
         return response.data['progress'];
       } else {
-        throw Exception('Gagal mengambil data progress kompen');
+        return []; // Return an empty list if the response status code is not 200
       }
     } catch (e) {
-      throw Exception('Gagal mengambil data progress kompen: $e');
+      return []; // Return an empty list if an exception occurs
     }
   }
 }
