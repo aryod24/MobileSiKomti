@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sikomti_mobile/screen/mhs/history/qrexport.dart';
 import 'package:sikomti_mobile/services/HistoryApiService.dart';
-import 'history/qrexport.dart';
 
 class HasilScreenMahasiswa extends StatefulWidget {
   @override
@@ -42,7 +42,10 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
+            ],
           ),
         ),
         child: Column(
@@ -103,14 +106,13 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
                                   gradient: LinearGradient(
                                     colors: [
                                       Color(0xFF00509E),
-                                      Color(0xFF002366),
+                                      Color(0xFF002366)
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(15),
-                                  ),
+                                      top: Radius.circular(15)),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,8 +191,7 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.vertical(
-                                    bottom: Radius.circular(15),
-                                  ),
+                                      bottom: Radius.circular(15)),
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -202,8 +203,7 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
                                           history['kompen']['Is_Selesai'] == 1
                                               ? Icons.check_circle_outline
                                               : Icons.cancel,
-                                          color:
-                                              Color(0xFF00509E),
+                                          color: Color(0xFF00509E),
                                         ),
                                         const SizedBox(width: 2),
                                         Text(
@@ -228,8 +228,7 @@ class _HasilScreenMahasiswaState extends State<HasilScreenMahasiswa> {
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            Color(0xFF00509E),
+                                        backgroundColor: Color(0xFF00509E),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),

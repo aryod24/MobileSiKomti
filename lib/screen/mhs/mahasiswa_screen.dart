@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sikomti_mobile/screen/mhs/hasilscreenmhs.dart';
 import 'package:sikomti_mobile/screen/mhs/progresskompen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sikomti_mobile/screen/mhs/qrscan.dart';
 import 'list_kompenmhs.dart';
 import '../profil/profile_screen.dart';
 import 'profilmhs.dart';
@@ -127,6 +128,7 @@ class HomepageContent extends StatelessWidget {
     required IconData icon,
     required String label,
     required int index,
+    required BuildContext context,
   }) {
     return Hero(
       tag: 'menu_button_$label',
@@ -167,6 +169,51 @@ class HomepageContent extends StatelessWidget {
     );
   }
 
+  Widget _buildQrButton(BuildContext context) {
+    return Hero(
+      tag: 'menu_button_qr',
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFF00509E),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => QRCodeScanScreen()),
+              );
+            },
+            borderRadius: BorderRadius.circular(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.qr_code_scanner,
+                  size: 40,
+                  color: Colors.white,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Scan Qr\nKompen',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -178,7 +225,7 @@ class HomepageContent extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 255, 255, 255)
+              Color.fromARGB(255, 255, 255, 255),
             ],
           ),
         ),
@@ -201,22 +248,21 @@ class HomepageContent extends StatelessWidget {
                   icon: Icons.list_alt,
                   label: 'List\nPekerjaan',
                   index: 1,
+                  context: context,
                 ),
                 _buildMenuButton(
                   icon: Icons.assignment_turned_in,
-                  label: 'Pengajuan\nKompen',
+                  label: 'Progres\nKompen',
                   index: 2,
+                  context: context,
                 ),
                 _buildMenuButton(
                   icon: Icons.access_time,
-                  label: 'Progres\nKompen',
-                  index: 2,
-                ),
-                _buildMenuButton(
-                  icon: Icons.assignment,
                   label: 'Hasil\nKompen',
                   index: 3,
+                  context: context,
                 ),
+                _buildQrButton(context),
               ],
             ),
           ],

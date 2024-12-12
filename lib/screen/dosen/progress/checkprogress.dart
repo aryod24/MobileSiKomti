@@ -118,7 +118,7 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 40), // Reduced space here
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -127,8 +127,8 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 12),
               color: const Color(0xFF002366),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 12.0),
                 child: Row(
                   children: [
                     IconButton(
@@ -152,7 +152,6 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 0),
             Expanded(
               child: FutureBuilder<List<dynamic>>(
                 future: progressList,
@@ -170,13 +169,12 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                     return ListView.builder(
                       itemCount: progressData.length,
                       itemBuilder: (context, index) {
-                        var currentProgress =
-                            progressData[index]; // Rename to avoid confusion
+                        var currentProgress = progressData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 1),
+                              horizontal: 16.0, vertical: 0),
                           child: Card(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),

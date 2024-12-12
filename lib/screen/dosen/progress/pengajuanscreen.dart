@@ -78,7 +78,7 @@ class PengajuanScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 255, 255, 255)
+              Color.fromARGB(255, 255, 255, 255),
             ], // Gradient colors
           ),
         ),
@@ -86,18 +86,19 @@ class PengajuanScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              SizedBox(height: 25), // Adding space from the top
               // Card with Back Button
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 elevation: 4,
-                margin: const EdgeInsets.symmetric(horizontal: 7),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 color:
                     const Color(0xFF002366), // Mengatur warna card menjadi biru
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 8.0),
+                      horizontal: 15.0, vertical: 10.0),
                   child: Row(
                     children: [
                       IconButton(

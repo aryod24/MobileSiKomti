@@ -65,6 +65,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
                 ),
                 child: Column(
                   children: [
+                    const SizedBox(height: 40),
                     buildHeaderCard(context),
                     const SizedBox(height: 10),
                     buildDetailCard(context, kompen),
