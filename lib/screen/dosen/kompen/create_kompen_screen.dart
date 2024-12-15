@@ -271,20 +271,28 @@ class _CreateKompenScreenState extends State<CreateKompenScreen> {
                 },
               ),
               SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Is Selesai'),
-                  Switch(
-                    value: isSelesai,
-                    onChanged: (value) {
-                      setState(() {
-                        isSelesai = value;
-                      });
-                    },
-                  ),
-                ],
+              DropdownButtonFormField<String>(
+                value: isSelesai
+                    ? 'Selesai'
+                    : 'Belum Selesai', // Set default value
+                decoration: InputDecoration(
+                  labelText: 'Status Selesai',
+                  border: OutlineInputBorder(),
+                ),
+                items: ['Selesai', 'Belum Selesai'].map((status) {
+                  return DropdownMenuItem(
+                    value: status,
+                    child: Text(status),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    isSelesai = value ==
+                        'Selesai'; // Update the value based on selection
+                  });
+                },
               ),
+
               SizedBox(height: 20),
               _isLoading
                   ? CircularProgressIndicator()

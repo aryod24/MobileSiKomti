@@ -98,7 +98,8 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
           selectedKompetensi = kompetensi['id']?.toString();
         }
 
-        isSelesai = data['is_selesai'] == 1;
+        // Set isSelesai based on the data value, where 1 means 'Selesai' and 0 means 'Belum Selesai'
+        isSelesai = data['Is_Selesai'] == 1;
       });
     } catch (e) {
       _showError('Gagal memuat data: $e');
@@ -278,19 +279,26 @@ class _EditKompenScreenState extends State<EditKompenScreen> {
                       controller: _tanggalAkhirController,
                       label: 'Tanggal Akhir (YYYY-MM-DD)',
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Status Selesai'),
-                        Switch(
-                          value: isSelesai,
-                          onChanged: (value) {
-                            setState(() {
-                              isSelesai = value;
-                            });
-                          },
-                        ),
-                      ],
+                    DropdownButtonFormField<String>(
+                      value: isSelesai
+                          ? 'Selesai'
+                          : 'Belum Selesai', // Set default value based on isSelesai
+                      decoration: InputDecoration(
+                        labelText: 'Status Selesai',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: ['Selesai', 'Belum Selesai'].map((status) {
+                        return DropdownMenuItem(
+                          value: status,
+                          child: Text(status),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          isSelesai = value ==
+                              'Selesai'; // Update the value based on selection
+                        });
+                      },
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(

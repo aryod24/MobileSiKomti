@@ -269,7 +269,7 @@ class _KompenScreenState extends State<KompenScreen> {
                                     Icon(Icons.toggle_on, color: Colors.grey),
                                     SizedBox(width: 5),
                                     Text(
-                                      'Status: ${statusDibuka == 0 ? "Ya" : "Tidak"}',
+                                      'Status: ${statusDibuka == 0 ? "Ditutup" : "Dibuka"}',
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,

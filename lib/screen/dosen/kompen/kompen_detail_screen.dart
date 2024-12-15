@@ -170,7 +170,7 @@ class _KompenDetailScreenState extends State<KompenDetailScreen> {
       },
       {
         'icon': Icons.check,
-        'title': 'Is Selesai',
+        'title': 'Status Selesai',
         'subtitle': _getIsSelesai(kompen['Is_Selesai'])
       },
       {
