@@ -46,7 +46,7 @@ class _UploadBuktiScreenState extends State<UploadBuktiScreen> {
       }
 
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/upload-bukti',
+        'http://192.168.1.14:8000/api/upload-bukti',
         data: formData,
       );
 

@@ -8,6 +8,7 @@ import '../profil/profile_screen.dart';
 import 'botnav_dsn.dart';
 import 'profildsn.dart';
 import 'data_screen.dart';
+import 'package:sikomti_mobile/screen/mhs/qrscan.dart';
 
 class DosenScreen extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _DosenScreenState extends State<DosenScreen> {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
-        color: Colors.white, // Latar belakang putih
+        color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,7 +57,7 @@ class _DosenScreenState extends State<DosenScreen> {
                 width: 400,
                 child: Card(
                   elevation: 4,
-                  color: Color(0xFF002366), // Warna biru header
+                  color: Color(0xFF002366),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -67,7 +68,7 @@ class _DosenScreenState extends State<DosenScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // Teks putih
+                        color: Colors.white,
                         fontFamily: 'Montserrat',
                       ),
                     ),
@@ -105,11 +106,6 @@ class _DosenScreenState extends State<DosenScreen> {
                     onTap: () => setState(() => _selectedIndex = 1),
                   ),
                   _buildMenuButton(
-                    icon: Icons.assignment_turned_in,
-                    label: 'Pengajuan\nKompen',
-                    onTap: () => setState(() => _selectedIndex = 3),
-                  ),
-                  _buildMenuButton(
                     icon: Icons.access_time,
                     label: 'Progres\nKompen',
                     onTap: () => setState(() => _selectedIndex = 3),
@@ -119,6 +115,7 @@ class _DosenScreenState extends State<DosenScreen> {
                     label: 'Hasil\nKompen',
                     onTap: () => setState(() => _selectedIndex = 4),
                   ),
+                  _buildQrButton(context), // Add the QR button here
                 ],
               ),
             ),
@@ -128,12 +125,56 @@ class _DosenScreenState extends State<DosenScreen> {
     );
   }
 
+  Widget _buildQrButton(BuildContext context) {
+    return Hero(
+      tag: 'menu_button_qr',
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFF00509E),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => QRCodeScanScreen()),
+              );
+            },
+            borderRadius: BorderRadius.circular(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.qr_code_scanner,
+                  size: 40,
+                  color: Colors.white,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Scan Qr\nKompen',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:
-            Color.fromARGB(255, 255, 255, 255), // Biru seperti pada gambar
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
         title: Text(
           'SiKomti',
@@ -141,7 +182,7 @@ class _DosenScreenState extends State<DosenScreen> {
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
             fontSize: 25,
-            color: const Color.fromARGB(255, 0, 0, 0), // Teks putih
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
         leading: Padding(
@@ -150,21 +191,16 @@ class _DosenScreenState extends State<DosenScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.account_circle,
-              color: const Color.fromARGB(255, 0, 0, 0),
-              size: 35,
-            ),
+            icon: Icon(Icons.account_circle,
+                color: const Color.fromARGB(255, 0, 0, 0), size: 35),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()));
             },
           ),
         ],
       ),
-      backgroundColor: Colors.white, // Latar belakang putih
+      backgroundColor: Colors.white,
       body: FutureBuilder<Map<String, String>>(
         future: getUserData(),
         builder: (context, snapshot) {
@@ -174,7 +210,6 @@ class _DosenScreenState extends State<DosenScreen> {
             return Center(child: Text('An error occurred'));
           } else {
             final userData = snapshot.data!;
-
             return IndexedStack(
               index: _selectedIndex,
               children: [
@@ -189,9 +224,7 @@ class _DosenScreenState extends State<DosenScreen> {
         },
       ),
       bottomNavigationBar: BotNavDosen(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
+          selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
     );
   }
 
@@ -201,34 +234,36 @@ class _DosenScreenState extends State<DosenScreen> {
     required VoidCallback onTap,
   }) {
     return Hero(
-      tag: 'menu_button_$label', // Gunakan label untuk tag unik
+      tag: 'menu_button_$label',
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF00509E), // Warna biru menu
-          borderRadius: BorderRadius.circular(10),
+          color: Color(0xFF00509E), // Background color of the button
+          borderRadius: BorderRadius.circular(10), // Rounded corners
         ),
         child: Material(
-          color: Colors.transparent,
+          color: Colors.transparent, // Transparent material for ripple effect
           child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(10),
+            onTap: onTap, // Action when button is tapped
+            borderRadius:
+                BorderRadius.circular(10), // Match with container's radius
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Center content vertically
               children: [
                 Icon(
                   icon,
                   size: 40,
-                  color: Colors.white,
+                  color: Colors.white, // Icon color
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 8), // Space between icon and text
                 Text(
                   label,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.center, // Center text alignment
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.white, // Text color
                     fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold, // Bold text
+                    fontFamily: 'Montserrat', // Custom font family
                   ),
                 ),
               ],

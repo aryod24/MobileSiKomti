@@ -172,9 +172,9 @@ class _CheckProgressScreenState extends State<CheckProgressScreen> {
                         var currentProgress = progressData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 0),
+                              horizontal: 16.0, vertical: 4),
                           child: Card(
-                            margin: const EdgeInsets.symmetric(vertical: 0),
+                            margin: const EdgeInsets.symmetric(vertical: 4),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
