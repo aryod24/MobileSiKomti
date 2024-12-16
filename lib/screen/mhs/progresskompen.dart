@@ -261,12 +261,15 @@ class _ProgressKompenScreenState extends State<ProgressKompenScreen> {
                                       Icon(
                                         request['status_Acc'] == 1
                                             ? Icons.check_circle_outline
-                                            : Icons.cancel,
+                                            : request['status_Acc'] == 0
+                                                ? Icons.cancel
+                                                : Icons
+                                                    .hourglass_empty, // Icon for Menunggu Acc
                                         color: Color(0xFF00509E),
                                       ),
                                       const SizedBox(width: 2),
                                       Text(
-                                        'Status: ${request['status_Acc'] == 1 ? 'Diterima' : 'Ditolak'}',
+                                        'Status: ${request['status_Acc'] == 1 ? 'Diterima' : request['status_Acc'] == 0 ? 'Ditolak' : 'Menunggu Acc'}',
                                         style: const TextStyle(
                                           fontFamily: 'Montserrat',
                                           color: Color(0xFF00509E),

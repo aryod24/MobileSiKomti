@@ -40,44 +40,47 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         color: Colors.white, // Ubah latar belakang menjadi putih
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                // LOGO - using Image.asset directly
-                Image.asset(
-                  'assets/image/logonew.png', // Load image from assets
-                  width: 140, // Adjust width
-                  height: 140, // Adjust height
-                ),
-                const SizedBox(height: 40),
-                const Text(
-                  'Silahkan Login\nke akun Anda',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black, // Ubah teks menjadi hitam
+          child: SingleChildScrollView(
+            // Membuat layar bisa di-scroll
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // LOGO - using Image.asset directly
+                  Image.asset(
+                    'assets/image/logonew.png', // Load image from assets
+                    width: 140, // Adjust width
+                    height: 140, // Adjust height
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 50),
-                // Username Field
-                _buildTextField('Masukkan nama Anda', _usernameController),
-                const SizedBox(height: 20),
-                // Password Field
-                _buildTextField('Masukkan password Anda', _passwordController,
-                    obscureText: true),
-                const SizedBox(height: 30),
-                // Login Button
-                _isLoading
-                    ? Center(child: CircularProgressIndicator())
-                    : _buildLoginButton(),
-                const SizedBox(height: 20),
-                // Registration Prompt
-                _buildRegisterPrompt(context),
-              ],
+                  const SizedBox(height: 40),
+                  const Text(
+                    'Silahkan Login\nke akun Anda',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black, // Ubah teks menjadi hitam
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 50),
+                  // Username Field
+                  _buildTextField('Masukkan nama Anda', _usernameController),
+                  const SizedBox(height: 20),
+                  // Password Field
+                  _buildTextField('Masukkan password Anda', _passwordController,
+                      obscureText: true),
+                  const SizedBox(height: 30),
+                  // Login Button
+                  _isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : _buildLoginButton(),
+                  const SizedBox(height: 20),
+                  // Registration Prompt
+                  _buildRegisterPrompt(context),
+                ],
+              ),
             ),
           ),
         ),
