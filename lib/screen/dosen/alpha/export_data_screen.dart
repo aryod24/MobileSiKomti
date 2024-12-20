@@ -62,6 +62,7 @@ class ExportDataScreen extends StatelessWidget {
   void _exportToPDF(BuildContext context) async {
     try {
       final data = await mahasiswaAlphaList;
+      print("Data Mahasiswa: $data"); // Debug log
       final pdfData = data
           .map((mahasiswa) => {
                 'ni': mahasiswa.ni,
@@ -72,13 +73,13 @@ class ExportDataScreen extends StatelessWidget {
               })
           .toList();
 
-      // Call the exportToPDF function with context
       await exportToPDF(pdfData, context);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('PDF berhasil dibuat dan disimpan!')),
       );
     } catch (e) {
+      print("Error: $e"); // Debug log for error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal membuat PDF: $e')),
       );

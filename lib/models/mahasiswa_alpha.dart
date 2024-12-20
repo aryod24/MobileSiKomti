@@ -17,12 +17,12 @@ class MahasiswaAlpha {
 
   factory MahasiswaAlpha.fromJson(Map<String, dynamic> json) {
     return MahasiswaAlpha(
-      idAlpha: json['id_alpha'],
-      ni: json['ni'],
-      nama: json['nama'], // Parse the nama field from JSON
-      jamAlpha: json['jam_alpha'],
-      semester: json['semester'],
-      jamKompen: json['jam_kompen'],
+      idAlpha: json['id_alpha'] ?? 0, // Default value
+      ni: json['ni'] ?? 'N/A', // Handle null values
+      nama: json['nama'] ?? 'N/A',
+      jamAlpha: json['jam_alpha'] ?? 0,
+      semester: json['semester'] ?? 0,
+      jamKompen: json['jam_kompen'] ?? 0,
     );
   }
 
