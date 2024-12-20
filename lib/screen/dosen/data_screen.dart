@@ -308,50 +308,53 @@ class _DataScreenState extends State<DataScreen> {
                     final data = snapshot.data!;
                     return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(10), // Radius untuk tabel
-                        child: Table(
-                          columnWidths: const {
-                            0: FixedColumnWidth(75),
-                            1: FixedColumnWidth(100),
-                            2: FixedColumnWidth(50),
-                            3: FixedColumnWidth(50),
-                            4: FixedColumnWidth(63),
-                            5: FixedColumnWidth(40),
-                          },
-                          border: TableBorder.all(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          children: [
-                            TableRow(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xFF00509E),
-                                    Color(0xFF002366),
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(15),
-                                ),
-                              ),
-                              children: [
-                                tableCell('NIM', isHeader: true, height: 50),
-                                tableCell('Nama', isHeader: true, height: 50),
-                                tableCell('Semester',
-                                    isHeader: true, height: 50),
-                                tableCell('Jam Alpha',
-                                    isHeader: true, height: 50),
-                                tableCell('Jam Kompen',
-                                    isHeader: true, height: 50),
-                                tableCell('Aksi', isHeader: true, height: 50),
-                              ],
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(10), // Radius untuk tabel
+                          child: Table(
+                            columnWidths: const {
+                              0: FixedColumnWidth(75),
+                              1: FixedColumnWidth(100),
+                              2: FixedColumnWidth(50),
+                              3: FixedColumnWidth(50),
+                              4: FixedColumnWidth(63),
+                              5: FixedColumnWidth(40),
+                            },
+                            border: TableBorder.all(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            for (var mahasiswa in data)
-                              mahasiswaRow(context, mahasiswa),
-                          ],
+                            children: [
+                              TableRow(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xFF00509E),
+                                      Color(0xFF002366),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
+                                  ),
+                                ),
+                                children: [
+                                  tableCell('NIM', isHeader: true, height: 50),
+                                  tableCell('Nama', isHeader: true, height: 50),
+                                  tableCell('Semester',
+                                      isHeader: true, height: 50),
+                                  tableCell('Jam Alpha',
+                                      isHeader: true, height: 50),
+                                  tableCell('Jam Kompen',
+                                      isHeader: true, height: 50),
+                                  tableCell('Aksi', isHeader: true, height: 50),
+                                ],
+                              ),
+                              for (var mahasiswa in data)
+                                mahasiswaRow(context, mahasiswa),
+                            ],
+                          ),
                         ),
                       ),
                     );
