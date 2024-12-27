@@ -299,6 +299,10 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                                                               color: Colors
                                                                   .white70,
                                                             ),
+                                                            softWrap:
+                                                                true, // Membolehkan teks untuk membungkus ke baris baru
+                                                            overflow: TextOverflow
+                                                                .visible, // Membuat teks tetap terlihat jika terlalu panjang
                                                           ),
                                                         ),
                                                       ],
@@ -365,21 +369,6 @@ class _ListKompenScreenState extends State<ListKompenScreen> {
                                               const SizedBox(width: 2),
                                               Text(
                                                 '$quota',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Montserrat',
-                                                  color: Colors.white70,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.access_time,
-                                                  color: Colors.white),
-                                              const SizedBox(width: 2),
-                                              Text(
-                                                '$jamKompen jam',
                                                 style: const TextStyle(
                                                   fontFamily: 'Montserrat',
                                                   color: Colors.white70,

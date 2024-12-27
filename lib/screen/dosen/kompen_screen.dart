@@ -154,11 +154,14 @@ class _KompenScreenState extends State<KompenScreen> {
                                               ),
                                               SizedBox(height: 5),
                                               Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Icon(Icons.description,
                                                       color: Colors.white70),
                                                   SizedBox(width: 5),
                                                   Expanded(
+                                                    // Membungkus deskripsi untuk memastikan teks turun jika terlalu panjang
                                                     child: Text(
                                                       kompen['deskripsi'] ??
                                                           'Deskripsi tidak tersedia',
@@ -167,6 +170,10 @@ class _KompenScreenState extends State<KompenScreen> {
                                                             'Montserrat',
                                                         color: Colors.white70,
                                                       ),
+                                                      softWrap:
+                                                          true, // Mengizinkan teks turun jika panjang
+                                                      overflow: TextOverflow
+                                                          .visible, // Memastikan teks tidak dipotong
                                                     ),
                                                   ),
                                                 ],
